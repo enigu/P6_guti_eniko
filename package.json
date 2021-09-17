@@ -1,0 +1,23 @@
+{
+  "name": "p6_guti_eniko",
+  "version": "1.0.0",
+  "description": "html css js",
+  "main": "script.js",
+  "dependencies": {
+    "eslint": "^7.32.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enigu/P6_guti_eniko.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enigu/P6_guti_eniko/issues"
+  },
+  "homepage": "https://github.com/enigu/P6_guti_eniko#readme"
+}
