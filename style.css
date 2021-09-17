@@ -5,3 +5,12 @@
     align-content: space-between;
     justify-content: space-between;
 }
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    align-content: space-between;
+    justify-content: space-between;
+    align-items: center;
+}
