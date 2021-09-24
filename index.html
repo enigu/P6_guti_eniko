@@ -23,15 +23,18 @@
                 </svg>
                 
             <nav id="main-nav" role="navigation" aria-label="photographer categories">
-                <input placeholder="photographer categories" name="name" cols="40" rows="2"/>
-                <p id="values"></p>
+                <form id="form" method="POST" action="traitement.php">
+                    <input placeholder="photographer categories" id="value" type="text"/>
+                    <input type="submit" value="Envoyer" />
+                </form>
+>
             </nav>
         </header>
 
         <main class="content">
             <h1>Nos photographes</h1>
             <div id="gallery">
-
+                
             </div>
            
 
