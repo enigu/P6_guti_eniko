@@ -1,3 +1,5 @@
+@import "{ mdiPound } from '@mdi/js'";
+
 .container {
     display: flex;
     flex-direction: row;
@@ -9,8 +11,14 @@
 .header {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
     align-content: space-between;
     justify-content: space-between;
-    align-items: center;
+}
+
+.photographe img {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    object-fit: cover;
 }
