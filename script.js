@@ -28,7 +28,7 @@ function generatePhotographers(photographers) {
     photographerDiv.classList.add("photographe");
 
     //html.innerHTML = '<img src="./Sample Photos/Photographers ID Photos/' + photographer["portrait"] + '"><div class="name">' + photographer["name"] + '</div>';
-    photographerDiv.innerHTML = `<img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><div class="name">${photographer.name}</div><a href="photographer.html?id=${photographer.id}">Coucou</a><a href="#">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p>`;
+    photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><a class="name">${photographer.name}</a><a href="photographer.html?id=${photographer.id}"></a><a href="#">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
     //le lien avec l'id après le ? qui permet, sur le fichier js de ta page de profil d'utiliser la fonction url.parse pour récupérer les variables
     gallery.appendChild(photographerDiv);
   }) 
@@ -36,46 +36,54 @@ function generatePhotographers(photographers) {
 
 
 
+/*
+<div class="tag">
+    <span>javascript</span>
+    <i class="fas fa-hashtag"></i>
+</div>
+*/
 
-/*<div class="tag"></div>
-<span>javascript</span>
-<i class="fas fa-hashtag"></i>*/
-
-/*const tagContainer = document.querySelector('.tag-container');
+const tagContainer = document.querySelector('.tag-container');
 const input = document.querySelector('.tag-container input');
+
+var tags = []
 
 function createTag(label) {
   const div = document.createElement('div');
   div.setAttribute('class', 'tag');
   const span = document.createElement('span');
   span.innerHTML = label ;
-  //const hashTag = document.createElement('i');
-  //hashTag.setAttribute('class', 'fas')
+  const hashTag = document.createElement('i');
+  hashTag.setAttribute('class', 'fa-hashtag');
 
   div.appendChild(span);
-  //div.appendChild(hashTag);
+  div.appendChild(hashTag);
   return div;
 }
 
-//tagContainer.prepend(createTag('javascript'))
-//var tags = []
+function reset() {
+  document.querySelectorAll('.tag').forEach(function(tag) {
+    tag.parentElement.removeChild(tag);
+  })
+}
 
 function addTags() {
-  var tags = [""]
+  reset();
+  tags.forEach(function(tag){
+    const input = createTag(tag);
+    tagContainer.prepend(input);
 
-  const tags.forEach(function(tag) {
-    const tag = createTab(input.value);
-    tagContainer.prepend(tag);
-  });
+  })
 }
 
 input.addEventListener('keyup', function(e) {
   if(e.key === 'Enter') {
     tags.push(input.value);
+    addTags();
     input.value = '';
   }
 
-})*/
+})
 
 
 

@@ -1,4 +1,4 @@
-@import "{ mdiPound } from '@mdi/js'";
+ @import @fortawesome/free-solid-svg-icons;
 
 .container {
     display: flex;
@@ -14,6 +14,11 @@
     align-items: flex-start;
     align-content: space-between;
     justify-content: space-between;
+}
+
+.photographe {
+    display: flex;
+    flex-direction: column;
 }
 
 .photographe img {
