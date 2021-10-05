@@ -8,11 +8,55 @@ fetch("photographers.json")
 .then(function(jsonObj) {
   //let tags = [""];
 
+  /*<div class="tag">
+  <i class="fas fa-hashtag"></i>
+  <span>portrait</span>
+  </div>*/
+
+  const tagContainer = document.querySelector('.tag-container');
+  const input = document.querySelector('.tag-container input');
+  var tags = [];
+
+  function createTag(label) {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'tag');
+    const icon = document.createElement('i');
+    icon.setAttribute('class', 'fas fa-hashtag');
+    const span = document.createElement('span');
+    span.innerHTML = label;
+
+    div.appendChild(icon);
+    div.appendChild(span);
+    return div;
+  }
+
+  function reset() {
+    document.querySelectorAll('.tag').forEach(function(tag){
+      tag.parentElement.removeChild(tag);
+    })
+  }
+
+  function addTags() {
+    reset();
+    tags.slice().reverse().forEach(function(tag){
+      const input = createTag(tag);
+      tagContainer.prepend(input);
+    })
+  }
+
+  input.addEventListener('keyup', function(e){
+    if(e.key == 'Enter'){
+      tags.push(input.value);
+      addTags();
+      input.value = '';
+    }
+  })
+
+
   generatePhotographers(jsonObj["photographers"]);
   //addTags();
 
 })
-
 
 
 function generatePhotographers(photographers) {
@@ -36,54 +80,8 @@ function generatePhotographers(photographers) {
 
 
 
-/*
-<div class="tag">
-    <span>javascript</span>
-    <i class="fas fa-hashtag"></i>
-</div>
-*/
 
-const tagContainer = document.querySelector('.tag-container');
-const input = document.querySelector('.tag-container input');
 
-var tags = []
-
-function createTag(label) {
-  const div = document.createElement('div');
-  div.setAttribute('class', 'tag');
-  const span = document.createElement('span');
-  span.innerHTML = label ;
-  const hashTag = document.createElement('i');
-  hashTag.setAttribute('class', 'fa-hashtag');
-
-  div.appendChild(span);
-  div.appendChild(hashTag);
-  return div;
-}
-
-function reset() {
-  document.querySelectorAll('.tag').forEach(function(tag) {
-    tag.parentElement.removeChild(tag);
-  })
-}
-
-function addTags() {
-  reset();
-  tags.forEach(function(tag){
-    const input = createTag(tag);
-    tagContainer.prepend(input);
-
-  })
-}
-
-input.addEventListener('keyup', function(e) {
-  if(e.key === 'Enter') {
-    tags.push(input.value);
-    addTags();
-    input.value = '';
-  }
-
-})
 
 
 
