@@ -6,57 +6,43 @@ fetch("photographers.json")
 }
 })
 .then(function(jsonObj) {
-  //let tags = [""];
-
-  /*<div class="tag">
-  <i class="fas fa-hashtag"></i>
-  <span>portrait</span>
-  </div>*/
 
   const tagContainer = document.querySelector('.tag-container');
-  const input = document.querySelector('.tag-container input');
   var tags = [];
 
-  function createTag(label) {
-    const div = document.createElement('div');
-    div.setAttribute('class', 'tag');
-    const icon = document.createElement('i');
-    icon.setAttribute('class', 'fas fa-hashtag');
-    const span = document.createElement('span');
-    span.innerHTML = label;
+  let tagList = document.querySelectorAll(".tag");
+  let gallery = document.querySelector("#gallery");
 
-    div.appendChild(icon);
-    div.appendChild(span);
-    return div;
-  }
+  for (let i = 0; i < tagList.length; i++)
+  {
+    tagList[i].addEventListener("click", function(e) {
+    let tagName = e.target.getAttribute("tag");
 
-  function reset() {
-    document.querySelectorAll('.tag').forEach(function(tag){
-      tag.parentElement.removeChild(tag);
+    //lancer fonction qui efface les photographes qui n'ont pas le tag et affiche ceux qui l'ont
+    gallery.innerHTML = "";
+    parsePhotographers(jsonObj, tagName);
+
     })
   }
-
-  function addTags() {
-    reset();
-    tags.slice().reverse().forEach(function(tag){
-      const input = createTag(tag);
-      tagContainer.prepend(input);
-    })
-  }
-
-  input.addEventListener('keyup', function(e){
-    if(e.key == 'Enter'){
-      tags.push(input.value);
-      addTags();
-      input.value = '';
-    }
-  })
-
 
   generatePhotographers(jsonObj["photographers"]);
   //addTags();
 
 })
+
+function parsePhotographers(photographers, tag) {
+let photographerDiv = document.createElement("div");
+let gallery = document.getElementById("gallery");
+
+photographers.forEach(function(photographer) {
+
+//vérifier que dans le tableau photographer["tags"] il existe le tag contenu dans la variable tag (array.includes(""))
+  //if photographer["tags"].includes("tagname")
+  photographerDiv.classList.add("photographe");
+  photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><br><a class="name">${photographer.name}</a><br><a href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
+  gallery.appendChild(photographerDiv);
+  }) 
+}
 
 
 function generatePhotographers(photographers) {
@@ -71,8 +57,10 @@ function generatePhotographers(photographers) {
 
     photographerDiv.classList.add("photographe");
 
-    //html.innerHTML = '<img src="./Sample Photos/Photographers ID Photos/' + photographer["portrait"] + '"><div class="name">' + photographer["name"] + '</div>';
-    photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><a class="name">${photographer.name}</a><a href="photographer.html?id=${photographer.id}"></a><a href="#">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
+    console.log(photographer["tags"]);
+
+
+    photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><br><a class="name">${photographer.name}</a><br><a href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
     //le lien avec l'id après le ? qui permet, sur le fichier js de ta page de profil d'utiliser la fonction url.parse pour récupérer les variables
     gallery.appendChild(photographerDiv);
   }) 
