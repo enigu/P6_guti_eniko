@@ -23,8 +23,9 @@ fetch("photographers.json")
       gallery.innerHTML = "";
 
       //si la class couleur était déjà dessus, c'est qu'on avait déjà cliqué, penser à enlever class
-      if(e.target.contains("color")) {
-
+      if(e.target.contains(style.backgroundColor = "#901C1C")) {
+        e.target.removeAttribute("tag");
+        generatePhotographers(photographers);
       }
 
       //lors du clic ajoute class pour mettre couleur
@@ -43,15 +44,6 @@ fetch("photographers.json")
           gallery.appendChild(photographerDiv);
         }
     })
-
-
-    //parsePhotographers(jsonObj, tagName);
-    /*if(photographers["tags"] == tagName) {
-      console.log()
-    }
-    else {
-
-    }*/
     })
   }
 
