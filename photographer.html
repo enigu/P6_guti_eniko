@@ -22,8 +22,48 @@
                 </svg>
         </header>       
     </div>
-    <main>
-        
+    <main class="main">
+        <section class="photographers-profile" role="region" aria-label="Photographers information">
+            <div class="info">
+            </div>
+            
+
+        </section>
+        <section class="select-menu">
+            <div class="filter">
+                <label for="tri">Trier par</label>
+                <div class="dropdown">
+                    <button><input type="button" name="filterby" value="popularite" id="filterby" aria-labelledby="filterby">
+                        <span><i class="fas fa-chevron-down"></i></span>
+                        <span><i class="fas fa-chevron-up"></i></span>
+                    </button>
+                    <ul class="all-choices" role="list" aria-labelledby="filter-choice">
+                        <li role="choice" class="choice" id="option" aria-selected="true">Popularité</li>
+                        <li role="choice" class="choice" id="date" aria-selected="false">Date</li>
+                        <li role="choice" class="choice" id="title" aria-selected="false">Titre</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="media" role="region" aria-label="photographers-media">
+        </section>
+        <section class="background" role="region" aria-label="fill-in form">
+            <div class="form">
+                <span class="close"></span>
+                <div class="form-body">
+                    <form name="contact-info" action="/photographer.html" method="GET" class="form">
+                        <div class="user-info">
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
     <script type="text/javascript" src="photographer.js"></script>  
 </body>
