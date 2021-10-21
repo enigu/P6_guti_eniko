@@ -1,3 +1,9 @@
+//fetch de json
 
-const params = new URLSearchParams(document.location.search);
+// get photographer's id in url
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
 const photographerId = urlParams.get('id');
+
+console.log(photographerId);
