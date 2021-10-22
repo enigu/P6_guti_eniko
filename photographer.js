@@ -18,14 +18,17 @@ fetch("photographers.json")
     photographers.forEach(function(photographer) {
         if (photographer["id"]==photographerId) {
           let photographerDiv = document.createElement("div");
-          photographerDiv.classList.add("photographer");  
+          photographerDiv.classList.add("photographe");
+          let avatarDiv = document.createElement("div")
+          avatarDiv.classList.add("avatar");
           let info = document.getElementById("info");
-          
-          photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><br>
-          <a class="name">${photographer.name}</a><br>
+
+          avatarDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"</div>`;
+          photographerDiv.innerHTML = `<div><a class="name">${photographer.name}</a><br>
           <a href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</a>
           <p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
           info.appendChild(photographerDiv);
+          info.appendChild(avatarDiv);
         }
     })  
   })

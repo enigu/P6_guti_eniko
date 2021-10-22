@@ -30,7 +30,7 @@ fetch("photographers.json")
           let photographerDiv = document.createElement("div");
           let gallery = document.getElementById("gallery");
           photographerDiv.classList.add("photographe");
-      
+          
           photographerDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><br><a class="name">${photographer.name}</a><br><a href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</a><p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
           //le lien avec l'id après le ? qui permet, sur le fichier js de ta page de profil d'utiliser la fonction url.parse pour récupérer les variables
           gallery.appendChild(photographerDiv);
