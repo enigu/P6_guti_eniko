@@ -48,18 +48,42 @@
         <section class="media" role="region" aria-label="photographers-media">
         </section>
         <section class="background" role="region" aria-label="fill-in form">
-            <div class="form">
-                <span class="close"></span>
-                <div class="form-body">
-                    <form name="contact-info" action="/photographer.html" method="GET" class="form">
-                        <div class="user-info">
+            <div class="content">
+                <div class="form">
+                    <span class="close"></span>
+                    <div class="form-body">
+                        <form name="contact-info" action="/photographer.html" method="GET" class="form">
+                            <div class="user-info" aria-labelledby="user information">
+                                <label for="first-name">Prénom</label>
+                                <br>
+                                <input type="text" name="first-name" id="first-name" required minlength="2">
+                                <br>
+                            </div>
+                            <div class="user-info">
+                                <label for="name">Nom</label>
+                                <br>
+                                <input type="text" name="name" id="name" required minlength="2">
+                                <br>
+                            </div>
+                            <div class="user-info">
+                                <label for="email">Email</label>
+                                <br>
+                                <input type="email" name="email" id="email" aria-required=true required>
+                                <br>
+                            </div>
+                            <div class="user-info">
+                                <label for="message">Votre message</label>
+                                <br>
+                                <textarea name="message" id="message" cols="18" rows="4"></textarea>
+                                <br>
+                            </div>
+                            <button class="submit">Envoyer</button>
 
-                        </div>
+                        </form>
 
-                    </form>
+                    </div>
 
                 </div>
-
             </div>
 
         </section>

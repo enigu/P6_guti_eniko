@@ -15,3 +15,8 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.contactme {
+    width: 8em;
+    height: 2.5em;
+}
