@@ -75,11 +75,8 @@
     display: contents;
 }
 
-.photographe {
-  
-}
-
 .selected {
     background-color: #901C1C;
     color: #FFF !important;
 }
+
