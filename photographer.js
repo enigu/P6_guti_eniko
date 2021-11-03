@@ -46,82 +46,33 @@ fetch("photographers.json")
 
     media.forEach(function(medium) {
         if (medium["photographerId"]==photographerId) {
-            //console.log(medium["photographerId"])
-            //console.log(photographerId);
 
             let photos = document.getElementById("photos");
             let mediaDiv = document.createElement("div");
             mediaDiv.classList.add("mediadiv");
-            let titleDiv = document.createElement("div");
-            let image = document.createElement("img");
-            image.classList.add("image");
-            titleDiv.classList.add("titlediv");
+            
             let heart = document.createElement("i");
             heart.classList.add("fas","fa-heart");
-
-            //console.log(currentPhotographer["name"]);
-            //console.log(medium["id"]);
-            //mediaDiv.innerHTML = `<img src="./Sample Photos/${currentPhotographer.name}/${medium.image}" />`;
             
             //vérifier que medium["image"] existe, si oui on fait avec medium["image"] sinon avec medium["video"]
-            if () {
-            mediaDiv.innerHTML = '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '" />';
-
-            photos.appendChild(mediaDiv);
+            if (medium["image"] = medium["image"]) {
+              mediaDiv.innerHTML = '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '" />';
+              photos.appendChild(mediaDiv);
             }
-            else{
-            }    
-            //photos.appendChild(mediaDiv);
+            if (medium["video"] = medium["video"]) {
+              mediaDiv.innerHTML = '<video controls="controls" poster="image.jpg" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '" />';
+              photos.appendChild(mediaDiv);
+            } 
 
             //<img src="./Sample Photos/Ellie Rose/Architecture_Connected_Curves.jpg"></img>
-            //image.innerHTML = `<img src="./Sample Photos/${photographer.name}/${medium.id}">`;
-
-            //titleDiv.innerHTML = `<h3>${medium.title}</h3><h4>${medium.likes}</h4>`
-
-            //photos.appendChild(titleDiv);
-            //titleDiv.appendChild(heart);
-
-            /*let titleDiv = document.getElementById("titlediv");
-            let image = document.createElement("img");
-            image.classList.add("image");
-            let title = document.createElement("h3");
-            title.classList.add("title");
-            let likes = document.createElement("h3");
-            likes.classList.add("likes");
-            //<i class="fas fa-heart"></i>
-            let heart = document.createElement("i");
-            heart.classList.add("fas","fa-heart");
-        
-            let photoId = medium.id;
-            //console.log(photoId);
-        
-            //<img src="./Sample Photos/Ellie Rose/Architecture_Connected_Curves.jpg"></img>
-            //image.innerHTML = `<img src="./Sample Photos/${photographer.name}/${medium.id}">`;
-            title.innerHTML = `<h3>${medium.title}</h3>`;
-            likes.innerHTML = `<h3>${medium.likes}</h3>`;
-        
-            titleDiv.appendChild(title);
-            titleDiv.appendChild(likes);
-            titleDiv.appendChild(heart);*/
-           
+            //<video controls="controls" poster="image.jpg" preload="auto">
+            //<source src="./Sample Photos/Mimi Keel/Animals_Wild_Horses_in_the_mountains.mp4" type="video/mp4"/>
+            //video Ellie</video>
+            //titleDiv.appendChild(heart);*/           
         }
     })
-
-
-  
   })
 
-  // fetch  de la section media des photographes
-
-  fetch("photographers.json")
-  .then(function(response) {
-    if (response.ok) {
-      return response.json();
-    }
-  })
-  .then(function(jsonObj) {
-    
-  })
 
   //fill-in form launch
 

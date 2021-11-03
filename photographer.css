@@ -35,7 +35,14 @@
 
 #photos {
     display: flex;
-    
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#photos video {
+    width: 6em;
+    height: 6em;
 }
 
 .mediadiv img{
