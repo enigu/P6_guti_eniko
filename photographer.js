@@ -44,35 +44,59 @@ fetch("photographers.json")
         const media = jsonObj["media"];
     //console.log(media);
 
-    media.forEach(function(medium) {
-        if (medium["photographerId"]==photographerId) {
+    //créer variable pour compter les likes
+    //let likes = 0;
 
-            let photos = document.getElementById("photos");
-            let mediaDiv = document.createElement("div");
-            mediaDiv.classList.add("mediadiv");
-            
-            let heart = document.createElement("i");
-            heart.classList.add("fas","fa-heart");
+    media.forEach(function(medium) {
+      if (medium["photographerId"]==photographerId) {
+
+        //ajouter le nombre de likes de medium à la variable des likes globale
+        //likes += medium["likes"];
+
+          let photos = document.getElementById("photos");
+          let mediaDiv = document.createElement("div");
+          mediaDiv.classList.add("mediadiv");
             
             //vérifier que medium["image"] existe, si oui on fait avec medium["image"] sinon avec medium["video"]
-            if (medium["image"] = medium["image"]) {
-              mediaDiv.innerHTML = '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '" />';
+            if (medium["image"]) {
+              mediaDiv.innerHTML = '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/> '+ '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>';
+              photos.appendChild(mediaDiv);
+            
+            }
+            else if (medium["video"]) {
+              mediaDiv.innerHTML = '<video controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '" />' ;
               photos.appendChild(mediaDiv);
             }
-            if (medium["video"] = medium["video"]) {
-              mediaDiv.innerHTML = '<video controls="controls" poster="image.jpg" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '" />';
-              photos.appendChild(mediaDiv);
-            } 
+
+          
+         
 
             //<img src="./Sample Photos/Ellie Rose/Architecture_Connected_Curves.jpg"></img>
             //<video controls="controls" poster="image.jpg" preload="auto">
             //<source src="./Sample Photos/Mimi Keel/Animals_Wild_Horses_in_the_mountains.mp4" type="video/mp4"/>
             //video Ellie</video>
-            //titleDiv.appendChild(heart);*/           
+            //<i class="fas fa-heart"></i>         
         }
     })
-  })
+        // event listener on the heart icon in order to count likes
+        let hearts = document.querySelectorAll(".heart");
+        //let counter = document.querySelectorAll(".counter");
+        hearts.forEach(heart => {
+          heart.addEventListener('click', function(e) {
+          let counter = e.target.previousSibling;
+          counter.innerHTML = parseInt(counter.innerHTML) + 1;
 
+          //sélectionner compteur global et ajouter 1 de la même manière
+ 
+        })
+      })
+        //total likes and price
+        let totalLikes = document.getElementById("total-likes");
+        let likesDiv = document.createElement("div");
+        likesDiv.classList.add("likesdiv");
+        //likesDiv.innerHTML = '<p>' + '' + '</p>' + '<i id="heart" class="fas fa-heart">' + medium["price"] + '/' + 'jour';
+        totalLikes.appendChild(likesDiv);
+  })
 
   //fill-in form launch
 

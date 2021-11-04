@@ -49,3 +49,9 @@
     width: 6em;
     height: 6em;
 }
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
