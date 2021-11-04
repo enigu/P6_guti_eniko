@@ -45,7 +45,12 @@
     height: 6em;
 }
 
-.mediadiv img{
+.mediadiv img {
+    width: 6em;
+    height: 6em;
+}
+
+.mediadiv video {
     width: 6em;
     height: 6em;
 }
