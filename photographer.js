@@ -71,8 +71,32 @@ fetch("photographers.json")
           mediaDiv.innerHTML = '<video controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }      
-      }
+      }     
     })
+
+     //lightbox
+     const lightBox = document.createElement("div");
+     lightBox.id = 'lightbox';
+     document.body.appendChild(lightBox);
+
+     const images = document.querySelectorAll(".mediadiv > a > img");
+     images.forEach(image => {
+       image.addEventListener('click', e => {
+         lightbox.classList.add("active");
+         const img = document.createElement("img");
+         img.src = image.src;
+         while (lightBox.firstChild) {
+           lightBox.removeChild(lightBox.firstChild)
+         }
+         lightBox.appendChild(img);
+       })
+     })
+
+     lightBox.addEventListener('click', e => {
+       if (e.target !== e.currentTarget) return
+       lightBox.classList.remove("active");
+     })
+
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
     let likesDiv = document.createElement("div");
@@ -126,6 +150,7 @@ const closeButton = document.querySelector(".submit");
 closeButton.addEventListener('click', function() {
     formBackground.style.display = "none";  
 });
+
 
 
 
