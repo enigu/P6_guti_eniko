@@ -36,7 +36,14 @@ fetch("photographers.json")
 
         info.appendChild(photographerDiv);
         info.appendChild(button);
-        info.appendChild(avatarDiv);  
+        info.appendChild(avatarDiv); 
+
+        // inject message 'contactez-moi ${photographer.name}' in the fill-in form
+        const contactMessage = document.getElementById("contact-message");
+        let messageDiv = document.createElement("p");
+
+        messageDiv.innerHTML = 'Contactez-moi' + ' ' + currentPhotographer["name"];
+        contactMessage.appendChild(messageDiv);
         }    
     });
         const media = jsonObj["media"];
@@ -71,7 +78,7 @@ fetch("photographers.json")
     let likesDiv = document.createElement("div");
 
     likesDiv.classList.add("likesdiv");
-    likesDiv.innerHTML = '<p>' + '' + '</p>' + likes + '<i class="fas fa-heart heart">' + '/' + 'jour';
+    likesDiv.innerHTML = '<div>' + likes  + '<i class="fas fa-heart heart">'+ '</i>' + '</div>' + '<p>' + currentPhotographer["price"] + '/' + 'jour' + '</p>' ;
     totalLikes.appendChild(likesDiv);
     
 
@@ -119,6 +126,8 @@ const closeButton = document.querySelector(".submit");
 closeButton.addEventListener('click', function() {
     formBackground.style.display = "none";  
 });
+
+
 
 
 

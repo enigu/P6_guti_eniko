@@ -121,3 +121,89 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.content {
+    width: 18em;
+    height: 30em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+    margin-bottom: 4em;
+    z-index: 3;
+}
+
+.form {
+    width: 18em;
+    height: 20em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4em;
+    margin-bottom: 4em;
+    background: #d3573c;
+}
+
+.contact-info {
+    width: 18em;
+    height: 20em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-info input{
+    width: 80%;
+    margin-left: 2em;
+}
+.user-info textarea {
+    width: 80%;
+    height: 6em;
+    margin-left: 2em;
+}
+
+.user-info label{
+    text-align: left;
+    margin-left: 2em;
+}
+
+.submit {
+    margin-left: 2em;
+    margin-top: 1em;
+    width: 8em;
+    height: 2.5em;
+    background:  #901C1C;
+    color: white;
+    text-align: center;
+    font-size: 1em;
+    border: 2px solid  #901C1C;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.close {
+    color: white;
+    font-size: 2em;
+    display: flex;
+    justify-content: flex-end;
+}
+i.fas.fa-times {
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    font-weight: 600;
+}
+
+#contact-message p {
+    margin-left: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0px;
+    color: black;
+}
+
+.likesdiv {
+    height: 2em;
+    width: 10em;
+    background: #d3573c;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
