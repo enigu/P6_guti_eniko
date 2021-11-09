@@ -23,15 +23,14 @@ fetch("photographers.json")
         let photographerDiv = document.createElement("div");
         photographerDiv.classList.add("photographe");
         let button = document.createElement("button");
-        //button.classList.add("contactme");
         button.setAttribute("id", "contactme");
         let avatarDiv = document.createElement("div");
         avatarDiv.classList.add("avatar");
         let info = document.getElementById("info");
 
-        photographerDiv.innerHTML = `<div><a class="name">${photographer.name}</a><br>
-        <a href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</a>
-        <p>${photographer.tagline}</p><p>${photographer.price}€/jour</p><p>#${photographer.tags}</p></div>`;
+        photographerDiv.innerHTML = `<div class="left-info"><h1 class="name">${photographer.name}</h1><br>
+        <h2 href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</h2>
+        <p>${photographer.tagline}</p><a>#${photographer.tags}</a></div>`;
         button.innerHTML = "Contactez-moi";  
         avatarDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"</div>`;
 
@@ -58,48 +57,56 @@ fetch("photographers.json")
     
         //vérifier que medium["image"] existe, si oui on fait avec medium["image"] sinon avec medium["video"]
         if (medium["image"]) {
-          mediaDiv.innerHTML = '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<video controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>' ;
+          mediaDiv.innerHTML = '<video controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }      
       }
     })
+    //total likes and price
+    let totalLikes = document.getElementById("total-likes");
+    let likesDiv = document.createElement("div");
+
+    likesDiv.classList.add("likesdiv");
+    likesDiv.innerHTML = '<p>' + '' + '</p>' + likes + '<i class="fas fa-heart heart">' + '/' + 'jour';
+    totalLikes.appendChild(likesDiv);
+    
+
     // event listener on the heart icon in order to count likes
     let hearts = document.querySelectorAll(".heart");
-
+    let allLikes = likes;
+    //console.log(allLikes);
+    
     hearts.forEach(heart => {
       heart.addEventListener('click', function(e) {
       let counter = e.target.previousSibling;
       counter.innerHTML = parseInt(counter.innerHTML) + 1;
       //sélectionner compteur global et ajouter 1 de la même manière
-      let allLikes = likes; 
       allLikes.innerHTML =  parseInt(allLikes.innerHTML) + 1;  
-      console.log(allLikes);
+      
       })
     })
-
-    //total likes and price
-    let totalLikes = document.getElementById("total-likes");
-    let likesDiv = document.createElement("div");
-    likesDiv.classList.add("likesdiv");
-    likesDiv.innerHTML = '<p>' + '' + '</p>' + likes  + '<i class="fas fa-heart heart">' + '/' + 'jour';
-    totalLikes.appendChild(likesDiv);
   })
 
 //fill-in form launch
 
 //DOM elements
 const formBackground = document.querySelector(".background");
-const contactBtn = document.getElementById("contactme");
+//const contactBtn = document.querySelector("#contactme");
 const userInfo = document.querySelectorAll(".user-info");
 const closeFormBtn = document.querySelector(".close");
 
-// launch form event
-contactBtn.addEventListener('click', function(){
+// launch form event --> event delegation with <div id="info">
+const info = document.getElementById("info");
+
+info.addEventListener('click', function(e){
+  const target = e.target;
+  if (target.matches("#contactme")) {
     formBackground.style.display = "block";
+  }
 });
 
 // close form with 'x' span
@@ -112,6 +119,9 @@ const closeButton = document.querySelector(".submit");
 closeButton.addEventListener('click', function() {
     formBackground.style.display = "none";  
 });
+
+
+
 
 
 
