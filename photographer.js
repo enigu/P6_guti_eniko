@@ -28,9 +28,21 @@ fetch("photographers.json")
         avatarDiv.classList.add("avatar");
         let info = document.getElementById("info");
 
-        photographerDiv.innerHTML = `<div class="left-info"><h1 class="name">${photographer.name}</h1><br>
-        <h2 href="photographer.html?id=${photographer.id}">${photographer.city}, ${photographer.country}</h2>
-        <p>${photographer.tagline}</p><a>#${photographer.tags}</a></div>`;
+        //boucle on photographer.tags in order to put a  # in front of each tag on the photographers page
+        const tags = photographer.tags;
+        let hashPlusTag= []
+        tags.forEach(tag => {
+          tag = '#' + tag;
+          hashPlusTag.push(tag);
+        })
+
+        /*for (var i = 0; i < hashPlusTag.length; i++) {
+          hashPlusTag[i].classList.add("contour")
+          hashPlusTag[i]
+        }*/
+
+        photographerDiv.innerHTML = '<div class="left-info">' + '<h1 class="name">' + photographer["name"] + '</h1>' + '<br>' + '<h2 href="photographer.html?id=${photographer.id}">' + photographer["city"] + ',' + ' ' + photographer["country"] + '</h2>' + '<p>' + photographer["tagline"] + '</p>' + '<a>' + hashPlusTag + '</a>' + '</div>';
+
         button.innerHTML = "Contactez-moi";  
         avatarDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"</div>`;
 
@@ -75,49 +87,68 @@ fetch("photographers.json")
     })
 
      //lightbox
-     const lightBox = document.createElement("div");
-     lightBox.id = 'lightbox';
-     document.body.appendChild(lightBox);
-
+      //lightBox.innerHTML = '<button class="closed">' + '<i class="fas fa-times">' + '</i>' + '</button>'
+     const lightBox = document.getElementById("lightbox");
      const images = document.querySelectorAll(".mediadiv > a > img");
+     //sélectionner balises video
+     
+
+    //mettre listener sur videos
+    //au lieu de créer un élément img il va falloir créer un élément video, une balise video
+
      images.forEach(image => {
        image.addEventListener('click', e => {
-         lightbox.classList.add("active");
+         lightBox.classList.add("active");
          const img = document.createElement("img");
          img.src = image.src;
+
+         const nextButton = document.createElement("button");
+         nextButton.classList.add("next");
+         nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
+         
          while (lightBox.firstChild) {
            lightBox.removeChild(lightBox.firstChild)
          }
+         lightBox.innerHTML = '<button class="closed"><i class="fas fa-times"></i></button> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
          lightBox.appendChild(img);
+         lightBox.appendChild(nextButton);
+
        })
-     })
+      })
 
      lightBox.addEventListener('click', e => {
        if (e.target !== e.currentTarget) return
        lightBox.classList.remove("active");
      })
 
+     //close lightbox with x button
+
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
     let likesDiv = document.createElement("div");
 
     likesDiv.classList.add("likesdiv");
-    likesDiv.innerHTML = '<div>' + likes  + '<i class="fas fa-heart heart">'+ '</i>' + '</div>' + '<p>' + currentPhotographer["price"] + '/' + 'jour' + '</p>' ;
+    likesDiv.innerHTML = '<div class="nrheart"><div class="likesNbr">' + likes  + '</div><i class="fas fa-heart heart">'+ '</i>' + '</div>' + '<p>' + currentPhotographer["price"] + '/' + 'jour' + '</p>' ;
     totalLikes.appendChild(likesDiv);
     
 
     // event listener on the heart icon in order to count likes
     let hearts = document.querySelectorAll(".heart");
-    let allLikes = likes;
+    likesNbr = document.querySelector(".likesNbr");
     //console.log(allLikes);
     
     hearts.forEach(heart => {
       heart.addEventListener('click', function(e) {
-      let counter = e.target.previousSibling;
-      counter.innerHTML = parseInt(counter.innerHTML) + 1;
-      //sélectionner compteur global et ajouter 1 de la même manière
-      allLikes.innerHTML =  parseInt(allLikes.innerHTML) + 1;  
-      
+        let counter = e.target.previousSibling;
+        //sélectionne l'html du compteur global pour récupérer sa value      
+        likesNbr = parseInt(likes.innerHTML) + 1;
+        console.log(likes.innerHTML);
+        //likesNbr += 1;
+        //faire +1 à likesNbr et le mettre dans likesDiv à la place de l'ancien (donc innerHTML)
+        counter.innerHTML = parseInt(counter.innerHTML) + 1;
+        //console.log(likesNbr);
+        //sélectionner compteur global et ajouter 1 de la même manière
+        //allLikes.innerHTML =  parseInt(allLikes.innerHTML) + 1;  
       })
     })
   })
