@@ -41,7 +41,9 @@ fetch("photographers.json")
           hashPlusTag[i]
         }*/
 
-        photographerDiv.innerHTML = '<div class="left-info">' + '<h1 class="name">' + photographer["name"] + '</h1>' + '<br>' + '<h2 href="photographer.html?id=${photographer.id}">' + photographer["city"] + ',' + ' ' + photographer["country"] + '</h2>' + '<p>' + photographer["tagline"] + '</p>' + '<a>' + hashPlusTag + '</a>' + '</div>';
+        photographerDiv.innerHTML = '<div class="left-info">' + '<h1 class="name">' + photographer["name"] + '</h1>' + '<br>' +
+         '<h2 href="photographer.html?id=${photographer.id}">' + photographer["city"] + ',' + ' ' + photographer["country"] + '</h2>' 
+         + '<p>' + photographer["tagline"] + '</p>' + '<a>' + hashPlusTag + '</a>' + '</div>';
 
         button.innerHTML = "Contactez-moi";  
         avatarDiv.innerHTML = `<div><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"</div>`;
@@ -87,42 +89,95 @@ fetch("photographers.json")
     })
 
      //lightbox
-      //lightBox.innerHTML = '<button class="closed">' + '<i class="fas fa-times">' + '</i>' + '</button>'
      const lightBox = document.getElementById("lightbox");
      const images = document.querySelectorAll(".mediadiv > a > img");
      //sélectionner balises video
      
-
     //mettre listener sur videos
     //au lieu de créer un élément img il va falloir créer un élément video, une balise video
 
      images.forEach(image => {
        image.addEventListener('click', e => {
-         lightBox.classList.add("active");
-         const img = document.createElement("img");
-         img.src = image.src;
+        
+        lightBox.classList.add("active");
+        const img = document.createElement("img");
+        img.src = image.src;
+        
 
          const nextButton = document.createElement("button");
          nextButton.classList.add("next");
          nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
-         
+
          while (lightBox.firstChild) {
            lightBox.removeChild(lightBox.firstChild)
          }
-         lightBox.innerHTML = '<button class="closed"><i class="fas fa-times"></i></button> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
+
+         lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
          lightBox.appendChild(img);
          lightBox.appendChild(nextButton);
 
-       })
-      })
 
-     lightBox.addEventListener('click', e => {
-       if (e.target !== e.currentTarget) return
-       lightBox.classList.remove("active");
-     })
+        // putting in place image counting for preveious and next image
+        for (let i = 0; i < images.length; i++) {
+          let newIndex = i; 
+          let clickedImgIndex;
+         
+          images[i].onclick = () => {
+            clickedImgIndex = i;
 
-     //close lightbox with x button
+            // function to show images
+            function preview () {
+              let imageURL = images[newIndex].querySelector("img").src;
+              img.src = imageURL;
+            }
 
+            const prevBtn = document.querySelector(".previous");
+            const nextBtn = document.querySelector(".next");
+
+            if(newIndex == 0) {
+              prevBtn.style.display = "none"; 
+            }
+            if(newIndex >= images.length - 1) {
+              nextBtn.style.display = "none"; 
+            }
+            //show previous photo when clicking on the button left arrow 
+            prevBtn.onclick = () => {
+              newIndex--;
+              if(newIndex == 0) {
+                preview()
+                prevBtn.style.display = "none";
+              }
+              else {
+                preview(); 
+                nextBtn.style.display = "block";
+              }
+            }
+            //show next photo when clicking on the button right arrow 
+            nextBtn.onclick = () => {
+              newIndex++;
+              if(newIndex >= images.length - 1) {
+                preview();
+                nextBtn.style.display = "none"; 
+              }
+              else {
+                preview();
+                prevBtn.style.display = "block";
+              }
+            }
+          }
+         
+
+        }
+
+         //close lightbox with x button
+         const closedButton = document.querySelector(".closed");
+
+        closedButton.addEventListener('click', e => {
+          lightBox.classList.remove("active");
+        })
+      }) 
+    })
+    
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
     let likesDiv = document.createElement("div");
@@ -183,13 +238,3 @@ closeButton.addEventListener('click', function() {
 });
 
 
-
-
-
-
-
-
-
-
-
-  

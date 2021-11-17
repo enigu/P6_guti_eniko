@@ -227,12 +227,20 @@ i.fas.fa-times {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
 
 #lightbox img {
-    max-width: 90%;
-    max-height: 40%;
-    padding: 4px; 
+    width: 20em;
+    height: 20em;
+    padding: 4px;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+#lightbox video {
+    width: 20em;
+    height: 20em;
+    padding: 4px;
 }
 
 .previous, .next {
@@ -243,7 +251,7 @@ i.fas.fa-times {
     color:#901C1C;
     position: fixed; 
     top: 50%;
-    right: 32%;
+    right: 10%;
     margin-top: -14px;
     cursor: pointer;
     opacity: 1;
@@ -251,7 +259,7 @@ i.fas.fa-times {
 
 .previous {
     right: auto;
-    left: 32%;
+    left: 30%;
 }
 
 .previous:hover, .next:hover {
@@ -265,8 +273,8 @@ i.fas.fa-times {
     background: transparent;
     color:#901C1C;
     position:fixed;
-    top: 13em;
-    right: 25em;
+    top: 10.5em;
+    right: 15em;
     opacity: 1;
     cursor: pointer;
     z-index: 10;
