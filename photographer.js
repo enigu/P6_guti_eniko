@@ -14,8 +14,6 @@ fetch("photographers.json")
     let photographerId = urlParams.get("id");
     var currentPhotographer;
 
-    //console.log(photographerId);
-
     photographers.forEach(function(photographer) {
       if (photographer["id"]==photographerId) {
         currentPhotographer = photographer;
@@ -36,17 +34,11 @@ fetch("photographers.json")
           hashPlusTag.push(tag);
         })
 
-        /*for (var i = 0; i < hashPlusTag.length; i++) {
-          hashPlusTag[i].classList.add("contour")
-          hashPlusTag[i]
-        }*/
-
         let htmlPhotograph = '<div class="left-info">' + '<h1 class="name">' + photographer["name"] + '</h1>' + '<br>' +
          '<h2 href="photographer.html?id=${photographer.id}">' + photographer["city"] + ',' + ' ' + photographer["country"] + '</h2>' 
          + '<p>' + photographer["tagline"] + '</p>'; 
-
-         
-         hashPlusTag.forEach(tagHtml => {
+ 
+        hashPlusTag.forEach(tagHtml => {
            htmlPhotograph = htmlPhotograph + '<a class="tagList">' + tagHtml + '</a>';
          })
 
@@ -65,11 +57,11 @@ fetch("photographers.json")
 
         messageDiv.innerHTML = 'Contactez-moi' + ' ' + currentPhotographer["name"];
         contactMessage.appendChild(messageDiv);
-        }    
+      }    
     });
-        const media = jsonObj["media"];
-    //console.log(media);
 
+    const media = jsonObj["media"];
+    
     //créer variable pour compter les likes
     let likes = 0;
     
@@ -85,20 +77,20 @@ fetch("photographers.json")
     
         //vérifier que medium["image"] existe, si oui on fait avec medium["image"] sinon avec medium["video"]
         if (medium["image"]) {
-          mediaDiv.innerHTML = '<a>' + '<img src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }      
       }     
     })
 
-     //lightbox
-     const lightBox = document.getElementById("lightbox");
-     const images = document.querySelectorAll(".mediadiv > a > img");
-     //ajouter class sur balises img et video pour sélectionner les deux à la fois
+    //lightbox
+    const lightBox = document.getElementById("lightbox");
+    //sélectionner img et video à la fois avec .class
+    const images = photos.querySelectorAll(".images"); 
      //sélectionner balises video
      
     //mettre listener sur videos
@@ -106,112 +98,90 @@ fetch("photographers.json")
 
      //images.forEach(image => {
       for (let i = 0; i < images.length; i++) {
-       images[i].addEventListener('click', e => {
+        images[i].addEventListener('click', e => {                
+          lightBox.classList.add("active");
+          //mettre un if qui vérifie que images[i].image existe, si oui créer img sinon créer video
+          //const img = document.createElement("img");
+          //img.src = images[i].src;
+          const img = document.createElement("img");
+          if (img.src.includes('.jpg')){
+            img.src = images[i].src;  
         
+            const nextButton = document.createElement("button");
+            nextButton.classList.add("next");
+            nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
+
+            while (lightBox.firstChild) {
+              lightBox.removeChild(lightBox.firstChild)
+            }
+
+            lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
+            lightBox.appendChild(img);
+            lightBox.appendChild(nextButton);
+
+            let nxtButton = lightBox.querySelector(".next");
+            let prvButton = lightBox.querySelector(".previous");
+
+            nxtButton.addEventListener('click', e => {
+              i += 1;
+              img.src = images[i].src;
+            })
+
+            prvButton.addEventListener('click', e => {
+              i -= 1;
+              img.src = images[i].src;
+            })
+
+            //close lightbox with x button
+            const closedButton = document.querySelector(".closed");
+            closedButton.addEventListener('click', e => {
+              lightBox.classList.remove("active");
+            })  
+          }
+       
+          // event listener video
+
+          const video = document.createElement("video");
+          //mettre un if qui vérifie que images[i].image existe, si oui créer img sinon créer video
+          if (video.src.includes('.mp4')) {     
+            video.src = images[i].src;
+            //console.log(video)
         
-        lightBox.classList.add("active");
+            const nextButton = document.createElement("button");
+            nextButton.classList.add("next");
+            nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
 
-        //mettre un if qui vérifie que images[i].image existe, si oui créer img sinon créer video
-        const img = document.createElement("img");
-        img.src = images[i].src;
-        
+            while (lightBox.firstChild) {
+            lightBox.removeChild(lightBox.firstChild)
+            };
 
-         const nextButton = document.createElement("button");
-         nextButton.classList.add("next");
-         nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
+            lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
+            lightBox.appendChild(video);
+            lightBox.appendChild(nextButton);
 
-         while (lightBox.firstChild) {
-           lightBox.removeChild(lightBox.firstChild)
-         }
+            let nxtButton = lightBox.querySelector(".next");
+            let prvButton = lightBox.querySelector(".previous");
 
-         lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
-         lightBox.appendChild(img);
-         lightBox.appendChild(nextButton);
+            nxtButton.addEventListener('click', e => {
+              i += 1;
+              video.src = images[i].src;
+            });
 
-         let nxtButton = lightBox.querySelector(".next");
-         let prvButton = lightBox.querySelector(".previous");
+            prvButton.addEventListener('click', e => {
+              i -= 1;
+              video.src = images[i].src;
+            });
+              //close lightbox with x button
+            const closedButton = document.querySelector(".closed");
 
-         nxtButton.addEventListener('click', e => {
-           i += 1;
-
-           img.src = images[i].src;
-         })
-
-         prvButton.addEventListener('click', e => {
-          i -= 1;
-
-          img.src = images[i].src;
+            closedButton.addEventListener('click', e => {
+              lightBox.classList.remove("active");
+            })
+          }
         })
-
-         //close lightbox with x button
-         const closedButton = document.querySelector(".closed");
-
-        closedButton.addEventListener('click', e => {
-          lightBox.classList.remove("active");
-        })
-      }) 
-    }
-
-    //lightBox Grafikart
-
-    /*<div id="lightbox">
-    <button class="lightbox__close"><i class="fas fa-times"></i></button>
-    <button class="lightbox__next"><i class="fas fa-chevron-right"></i></button>
-    <button class="lightbox__prev"><i class="fas fa-chevron-left"></i></button>
-    <div class="lightbox__container">
-      <img>
-    </div>
-    </div>*/
-
-    //@property {HTMLElement}
-    /*class Lightbox {
-      static init () {
-        //const links = document.querySelectorAll('.mediadiv > a > img');
-        //, ('.mediadiv > a > video')
-        const links = document.querySelectorAll('.mediadiv > a[href$=".jpg"], .mediadiv > a[href$=".mp4"]')
-        //console.log(links);
-        links.forEach(link => link.addEventListener('click', e => {
-          e.preventDefault()
-          new Lightbox(e.currentTarget.getAttribute('href'));  //graficart ('href')
-        }))  
       }
-      // @param {string} url de l'image
-      constructor (url) {
-        this.element = this.buildDOM(url);
-        this.loadImage(url)
-        document.body.appendChild(this.element);
-      }
-
-      //@param {string} url de l'image
-      loadImage(url) {
-        const image = new Image (); 
-        const container = this.element.querySelector('.lightbox__container');
-        image.onload = function () {
-          container.appendChild(image);  
-        }
-        image.src = url
-      
-      }
-
-      // @param {string} url de l'image
-      //return {HTML element}
-      buildDOM (url) {
-        const dom = document.createElement('div');
-        dom.id = 'lightbox';
-        //console.log(dom);
-        dom.innerHTML = `<button class="lightbox__close"><i class="fas fa-times"></i></button>
-        <button class="lightbox__next"><i class="fas fa-chevron-right"></i></button>
-        <button class="lightbox__prev"><i class="fas fa-chevron-left"></i></button>
-        <div class="lightbox__container">
-          <img src= "./Sample Photos/${currentPhotographer.name}/${medium.image}">
-        </div>`
-        return dom;
-      } 
-    }
-
-    Lightbox.init();*/
-
     
+
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
     let likesDiv = document.createElement("div");
@@ -240,7 +210,7 @@ fetch("photographers.json")
         //allLikes.innerHTML =  parseInt(allLikes.innerHTML) + 1;  
       })
     })
-  })
+  });
 
 //fill-in form launch
 
@@ -263,12 +233,13 @@ info.addEventListener('click', function(e){
 // close form with 'x' span
 closeFormBtn.addEventListener('click', function() {
     formBackground.style.display = "none";
-  });
+});
 
 // close form - close with button 'Envoyer'
 const closeButton = document.querySelector(".submit");
 closeButton.addEventListener('click', function() {
     formBackground.style.display = "none";  
 });
+
 
 

@@ -1,12 +1,6 @@
 .container {
-    display: grid;
-    grid-auto-flow: row;
-    grid:
-    "logo main"
-    "tags tags"/50% 50% ;
-}
-.main {
-    display: contents;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tag-container {
@@ -21,7 +15,7 @@
 
 .tag-container .tag {
     padding: 2px;
-    border: 2px solid #C4C4C4;
+    border: 1px solid #C4C4C4;
     border-radius: 12px;
     width: fit-content;
     margin: 5px;
@@ -44,35 +38,93 @@
 }
 
 .header {
-    display: contents;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     width: auto;
     height: 10vh;
 }
 
 .header svg {
     width: 9.5em;
-    grid-area: logo;
+    margin-left: 2em;
+}
+
+.content {
+    display: flex;
+    align-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.content h1 {
+    color: #901C1C;
+    margin-top: -1.8em;
+    font-size: 2em;
+    margin-right: 1em;
 }
 
 .photographe {
     display: flex;
     flex-direction: column;
+    width: 16em;
+    height: auto;
+    margin-top: 1em;
+    align-items: center;
 }
 
 .photographe img {
-    width: 6em;
-    height: 6em;
+    width: 8em;
+    height: 8em;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.content h1 {
+.photographe h2 {
+    color: #d3573c;
+    font-size: 1.8em;
+    font-weight: 500;
+    margin-bottom: 0.2em;
+}
+
+.photographe a {
+    text-decoration: none;
     color: #901C1C;
-    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.details p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.price {
+    color: #525252;
+    opacity: 0.7;
+}
+
+.location {
+    color: #901C1C;
 }
 
 #gallery{
-    display: contents;
+    background: #FFF;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .selected {
