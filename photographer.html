@@ -31,15 +31,15 @@
         <section class="select-menu">
             <div class="filter">
                 <label for="tri">Trier par</label>
-                <div class="dropdown">
-                    <button><input type="button" name="filterby" value="popularite" id="filterby" aria-labelledby="filterby">
-                        <span><i class="fas fa-chevron-down"></i></span>
-                        <span><i class="fas fa-chevron-up"></i></span>
+                <div class="filterup">
+                    <button type="button" name="filterby" value="popularite" class="filterby" aria-labelledby="filterby">Popularité
+                        <span><i class="fas fa-chevron-down" data-dropdown-button></i></span>
+                        <span><i class="fas fa-chevron-up" data-pullup-button></i></span>
                     </button>
-                    <ul class="all-choices" role="list" aria-labelledby="filter-choice">
-                        <li role="choice" class="choice" id="option" aria-selected="true">Popularité</li>
-                        <li role="choice" class="choice" id="date" aria-selected="false">Date</li>
-                        <li role="choice" class="choice" id="title" aria-selected="false">Titre</li>
+                    <ul class="dropdown" role="list" aria-labelledby="filter-choice">    
+                        <li role="choice" class="choice" id="option" aria-selected="true"><a href="#">Popularité</a></li>
+                        <li role="choice" class="choice" id="date" aria-selected="false"><a href="#">Date</a></li>
+                        <li role="choice" class="choice" id="title" aria-selected="false"><a href="#">Titre</a></li>
                     </ul>
                 </div>
             </div>

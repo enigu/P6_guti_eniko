@@ -87,6 +87,41 @@
     background-color: rgba(255,255,255, 0.7);
 }
 
+.filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 20%;
+    margin-left: 2em;
+}
+
+.filterup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 6em;
+}
+
+.dropdown {
+    list-style: none;
+    display: none;
+    margin-left: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    left: 0;
+    top: 0.5em;
+    background: #901C1C;
+}
+
+
+.dropdown a {
+    text-decoration: none;
+    color: white;
+}
+
 #photos {
     display: flex;
     flex-wrap: wrap;

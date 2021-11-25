@@ -64,9 +64,12 @@ fetch("photographers.json")
     
     //créer variable pour compter les likes
     let likes = 0;
+
+    //créer tableau de médias
     
     media.forEach(function(medium) {
       if (medium["photographerId"]==photographerId) {
+        //tableaumedia.push de medium
 
         //ajouter le nombre de likes de medium à la variable des likes globale
         likes += medium["likes"];
@@ -86,25 +89,41 @@ fetch("photographers.json")
         }      
       }     
     })
+    // trier media selon popularité, date, titre
+
+    const chevronDown = document.querySelector(".fa-chevron-down")
+    const dropdown = document.querySelector(".dropdown")
+    chevronDown.addEventListener('click', e => {
+      //chevronDown.classList.toggle('active');
+      dropdown.style.display = "flex";
+    })
+
+    const chevronUp = document.querySelector(".fa-chevron-up")
+  
+    chevronUp.addEventListener('click', e => {
+    
+      dropdown.style.display = "none";
+    })
 
     //lightbox
     const lightBox = document.getElementById("lightbox");
     //sélectionner img et video à la fois avec .class
     const images = photos.querySelectorAll(".images"); 
-     //sélectionner balises video
-     
-    //mettre listener sur videos
-    //au lieu de créer un élément img il va falloir créer un élément video, une balise video
 
-     //images.forEach(image => {
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', e => {                
           lightBox.classList.add("active");
-          //mettre un if qui vérifie que images[i].image existe, si oui créer img sinon créer video
-          //const img = document.createElement("img");
-          //img.src = images[i].src;
-          const img = document.createElement("img");
-          if (img.src.includes('.jpg')){
+
+          let img; 
+          // condition selon balise img ou vidéo
+          if (e.target.src.includes('.jpg')){
+            img = document.createElement("img");
+          }
+          else {
+            img = document.createElement("video");
+            img.setAttribute("controls", "");
+          }
+          
             img.src = images[i].src;  
         
             const nextButton = document.createElement("button");
@@ -137,47 +156,6 @@ fetch("photographers.json")
             closedButton.addEventListener('click', e => {
               lightBox.classList.remove("active");
             })  
-          }
-       
-          // event listener video
-
-          const video = document.createElement("video");
-          //mettre un if qui vérifie que images[i].image existe, si oui créer img sinon créer video
-          if (video.src.includes('.mp4')) {     
-            video.src = images[i].src;
-            //console.log(video)
-        
-            const nextButton = document.createElement("button");
-            nextButton.classList.add("next");
-            nextButton.innerHTML = '<i class="fas fa-chevron-right">' + '</i>';
-
-            while (lightBox.firstChild) {
-            lightBox.removeChild(lightBox.firstChild)
-            };
-
-            lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"></i></button>';
-            lightBox.appendChild(video);
-            lightBox.appendChild(nextButton);
-
-            let nxtButton = lightBox.querySelector(".next");
-            let prvButton = lightBox.querySelector(".previous");
-
-            nxtButton.addEventListener('click', e => {
-              i += 1;
-              video.src = images[i].src;
-            });
-
-            prvButton.addEventListener('click', e => {
-              i -= 1;
-              video.src = images[i].src;
-            });
-              //close lightbox with x button
-            const closedButton = document.querySelector(".closed");
-
-            closedButton.addEventListener('click', e => {
-              lightBox.classList.remove("active");
-            })
-          }
         })
       }
     
@@ -193,18 +171,24 @@ fetch("photographers.json")
 
     // event listener on the heart icon in order to count likes
     let hearts = document.querySelectorAll(".heart");
-    likesNbr = document.querySelector(".likesNbr");
+    let likesNbr = document.querySelector(".likesNbr");
     //console.log(allLikes);
     
     hearts.forEach(heart => {
       heart.addEventListener('click', function(e) {
         let counter = e.target.previousSibling;
+        let global = document.querySelector(".likesNbr");
+
         //sélectionne l'html du compteur global pour récupérer sa value      
-        likesNbr = parseInt(likes.innerHTML) + 1;
-        console.log(likes.innerHTML);
+        //likesNbr = parseInt(likes.innerHTML) + 1;
+
+        let globalLikes = parseInt(global.innerHTML) + 1;
+
+        //console.log(globalLikes);
         //likesNbr += 1;
         //faire +1 à likesNbr et le mettre dans likesDiv à la place de l'ancien (donc innerHTML)
         counter.innerHTML = parseInt(counter.innerHTML) + 1;
+        global.innerHTML = globalLikes;
         //console.log(likesNbr);
         //sélectionner compteur global et ajouter 1 de la même manière
         //allLikes.innerHTML =  parseInt(allLikes.innerHTML) + 1;  
