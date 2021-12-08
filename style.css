@@ -14,7 +14,7 @@
 }
 
 .tag-container .tag {
-    padding: 2px;
+    padding: 4px;
     border: 1px solid #C4C4C4;
     border-radius: 12px;
     width: fit-content;
@@ -96,6 +96,18 @@
     align-items: center;
 }
 
+.hashtags {
+    display: flex;
+    align-items: center;
+}
+
+.tagList {
+    padding: 2px;
+    border: 1px solid #C4C4C4;
+    border-radius: 12px;
+    font-size: 0.75em;
+}
+
 .details {
     display: flex;
     flex-direction: column;
@@ -115,6 +127,12 @@
 .location {
     color: #901C1C;
 }
+
+.tagline {
+    font-size: 0.75em;
+}
+
+
 
 #gallery{
     background: #FFF;

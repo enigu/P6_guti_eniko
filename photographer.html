@@ -22,7 +22,7 @@
                 </svg>
         </header>       
     </div>
-    <main class="main">
+    <main class="main" aria-hidden="false">
         <section class="photographers-profile" role="region" aria-label="Photographers information">
             <div id="info">
                 
@@ -32,18 +32,17 @@
             <div class="filter">
                 <label for="tri">Trier par</label>
                 <div class="filterup">
-                    <button type="button" name="filterby" value="popularite" class="filterby" aria-labelledby="filterby">Popularité
-                        <span><i class="fas fa-chevron-down" data-dropdown-button></i></span>
-                        <span><i class="fas fa-chevron-up" data-pullup-button></i></span>
-                    </button>
+                        <button role="choice" id="popularity" class="choice" id="option" aria-haspopup="listbox" aria-labelledby="exp_button" aria-selected="true">Popularité
+                        <span><i class="fas fa-chevron-down"></i></span>
+                        </button>
                     <ul class="dropdown" role="list" aria-labelledby="filter-choice">    
-                        <li role="choice" class="choice" id="option" aria-selected="true"><a href="#">Popularité</a></li>
-                        <li role="choice" class="choice" id="date" aria-selected="false"><a href="#">Date</a></li>
-                        <li role="choice" class="choice" id="title" aria-selected="false"><a href="#">Titre</a></li>
+                        <li role="choice" id="date" class="choice" id="date" aria-selected="false">Date</li>
+                        <li role="choice" id="title" class="choice" id="title" aria-selected="false">Titre</li>
                     </ul>
                 </div>
             </div>
         </section>
+
         <section id="photos" role="region" aria-label="photographers-media">
             
         </section>
@@ -59,8 +58,8 @@
                         <div id="contact-message"></div>
                         <i class="fas fa-times"></i>
                     </span>
-                    <div class="form-body">
-                        <form name="contact-info" action="/photographer.html" method="GET" class="form">
+                    <div class="form-body" aria-hidden="true" role="dialog">
+                        <form name="contact-info" action="/photographer.html" method="GET" class="form" >
                             <div class="user-info" aria-labelledby="user information">
                                 <label for="first-name">Prénom</label>
                                 <br>

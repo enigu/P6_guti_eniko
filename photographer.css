@@ -87,12 +87,13 @@
     background-color: rgba(255,255,255, 0.7);
 }
 
+
 .filter {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
-    width: 20%;
+    width: 30%;
     margin-left: 2em;
 }
 
@@ -101,25 +102,52 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    height: 6em;
+    height: 10em;
+    width: 10em;
 }
 
 .dropdown {
     list-style: none;
     display: none;
-    margin-left: 0px;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
     flex-direction: column;
     align-items: flex-start;
-    
     left: 0;
-    top: 0.5em;
+    top: 0;
     background: #901C1C;
+    color: white;
+    margin-top: 0;
+    font-weight: bold;
+    cursor: pointer;
+    width: 10rem;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-family: inherit;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 
-.dropdown a {
-    text-decoration: none;
+#popularity {
+    background: #901C1C;
     color: white;
+    border: none;
+    border-radius: 2px 2px 0px 0px;
+    width: 10rem;
+    height: 6vh;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-family: inherit;
+    text-align: left;   
+}
+
+.choice {
+    text-align: left;
+    height: 6vh;
 }
 
 #photos {

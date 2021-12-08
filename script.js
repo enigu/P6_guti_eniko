@@ -30,10 +30,6 @@ fetch("photographers.json")
           let photographerDiv = document.createElement("div");
           let gallery = document.getElementById("gallery");
           photographerDiv.classList.add("photographe");
-          
-          photographerDiv.innerHTML = `<a href="photographer.html?id=${photographer.id}"><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><h2 class="name">${photographer.name}</h2></a><div class="details"><p class="location">${photographer.city}, ${photographer.country}</p><p>${photographer.tagline}</p><p class="price">${photographer.price}€/jour</p><a class="hashtags">#${photographer.tags}</a></div>`;
-          //le lien avec l'id après le ? qui permet, sur le fichier js de ta page de profil d'utiliser la fonction url.parse pour récupérer les variables
-          gallery.appendChild(photographerDiv);
         }
     })  
     })
@@ -53,13 +49,14 @@ photographers.forEach(function(photographer) {
  //vérifier que dans le tableau photographer["tags"] il existe le tag contenu dans la variable tag
   //if photographer["tags"].includes("tagname")
   photographerDiv.classList.add("photographe");
+
+
   photographerDiv.innerHTML = `<a href="photographer.html?id=${photographer.id}"><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><h2 class="name">${photographer.name}</h2></a><div class="details"><p class="location">${photographer.city}, ${photographer.country}</p><p>${photographer.tagline}</p><p class="price">${photographer.price}€/jour</p><a class="hashtags">#${photographer.tags}</a></div>`;
   gallery.appendChild(photographerDiv);
   }) 
 }
 
 function generatePhotographers(photographers) {
-  //let tag = photographers.tags;
 
   photographers.forEach(function(photographer) {
   
@@ -68,10 +65,30 @@ function generatePhotographers(photographers) {
 
     photographerDiv.classList.add("photographe");
 
-    console.log(photographer["tags"]);
+    //boucle on photographer.tags in order to put a  # in front of each tag on the photographers page
+    const tags = photographer.tags;
+    let hashPlusTag= []
+    tags.forEach(tag => {
+      tag = '#' + tag;
+      hashPlusTag.push(tag);
+    })
+    
+    //le lien avec l'id après le ? permet, sur le fichier js de la page de profil d'utiliser la fonction url.parse pour récupérer les variables
+    let htmlPhotograph = `<a href="photographer.html?id=${photographer.id}">
+      <img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}">
+      <h2 class="name">${photographer.name}</h2>
+    </a>
+    <div class="details">
+      <p class="location">${photographer.city} , ${photographer.country}</p>
+      <p class="tagline">${photographer.tagline}</p>
+      <p class="price">${photographer.price}€/jour</p>
+      <div class="hashtags">`;
 
-    photographerDiv.innerHTML = `<a href="photographer.html?id=${photographer.id}"><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><h2 class="name">${photographer.name}</h2></a><div class="details"><p class="location">${photographer.city}, ${photographer.country}</p><p>${photographer.tagline}</p><p class="price">${photographer.price}€/jour</p><a class="hashtags">#${photographer.tags}</a></div>`;
-    //le lien avec l'id après le ? qui permet, sur le fichier js de ta page de profil d'utiliser la fonction url.parse pour récupérer les variables
+    hashPlusTag.forEach(tagHtml => {
+    htmlPhotograph = htmlPhotograph + '<a class="tagList">' + tagHtml + '</a>';
+    })
+
+    photographerDiv.innerHTML = htmlPhotograph + '</div>';
     gallery.appendChild(photographerDiv);
   }) 
 }
