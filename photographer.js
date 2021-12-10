@@ -111,14 +111,18 @@ fetch("photographers.json")
         return b.likes - a.likes; 
       });
       
+      photos.innerHTML = "";
       //show filtered media by popularity
-      mediaArray.forEach(function(medium) {    
-        if (mediaArray["image"]) {    
+      mediaArray.forEach(function(medium) {
+        let mediaDiv = document.createElement("div");
+        mediaDiv.classList.add("mediadiv");
+
+        if (medium["image"]) {    
           mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
-        else if (mediaArray["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+        else if (medium["video"]) {
+          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
       })
@@ -131,9 +135,7 @@ fetch("photographers.json")
     
       chevronDown.addEventListener('click', e => {
         dropdown.style.display = "flex";
-      })  
-  
-
+      })
 
     //lightbox
     const lightBox = document.getElementById("lightbox");
@@ -142,17 +144,19 @@ fetch("photographers.json")
     const titleImg = photos.querySelector(".title >p");
 
       for (let i = 0; i < images.length; i++) {
-        images[i].addEventListener('click', e => {                
+        images[i].addEventListener('click', e => {          
           lightBox.classList.add("active");
           let img; 
           // condition selon balise img ou vidéo
           if (e.target.src.includes('.jpg')){
             img = document.createElement("img");
+            //title p innerhtml = e.target.alt
             //img.title = medium.title;
           }
           else {
             img = document.createElement("video");
             img.setAttribute("controls", "");
+            //title p innerhtml = e.target.alt
           }
           
             img.classList.add("lightboxImg");
@@ -177,14 +181,18 @@ fetch("photographers.json")
             nxtButton.addEventListener('click', e => {
               i += 1;
               img.src = images[i].src;
+              
+              let lightboxImg = document.querySelector(".lightboxImg");
+
               //video
               if (images[i].src.includes('.mp4')) {
                 let video = document.createElement('VIDEO')
                 video.src = images[i].src; 
                 video.onloadeddata = () => {
-                  lightBox.removeChild(img);
+                  lightboxImg.remove();
                   lightBox.appendChild(video);
                   video.classList.add("lightboxImg");
+                  //title p innerhtml = images[i].alt
                 }
                 video.setAttribute('controls','');
               }
@@ -193,9 +201,9 @@ fetch("photographers.json")
                 img = document.createElement("img");
                 img.src = images[i].src;
                 img.onload = () => {
-                  while (lightBox.firstChild) {
-                    lightBox.removeChild(lightBox.firstChild)
-                  }
+                lightboxImg.remove();
+                //title p innerhtml = e.target.alt
+
                   lightBox.appendChild(img);
                   img.classList.add("lightboxImg");
                 }
@@ -214,6 +222,8 @@ fetch("photographers.json")
             })
 
             prvButton.addEventListener('click', e => {
+              let lightboxImg = document.querySelector(".lightboxImg");
+
               i -= 1;
               img.src = images[i].src;
               //video
@@ -221,7 +231,7 @@ fetch("photographers.json")
                 let video = document.createElement('VIDEO')
                 video.src = images[i].src; 
                 video.onloadeddata = () => {
-                  lightBox.removeChild(img);
+                  lightboxImg.remove();
                   lightBox.appendChild(video);
                   video.classList.add("lightboxImg");
                 }
@@ -232,9 +242,7 @@ fetch("photographers.json")
                 img = document.createElement("img");
                 img.src = images[i].src;
                 img.onload = () => {
-                  while (lightBox.firstChild) {
-                    lightBox.removeChild(lightBox.firstChild)
-                  }
+                  lightboxImg.remove();
                   lightBox.appendChild(img);
                   img.classList.add("lightboxImg");
                 }
@@ -303,24 +311,87 @@ closeButton.addEventListener('click', function() {
 });
 
 
-//keyboardevent.key - accessibility -- Lightbox
+//Lightbox - accessibility 
+/*
+const $prevBtn = $(".previous")
+const $nextBtn = $('.next')
+const $lightBoxItems = $('.lightboxImg')
+const $lightBox = $('#lightbox')
+ 
+let currentItemPosition = 0
+ 
+// Functions got to next & previous slides
+const goToNextSlide = () => {
+   if (currentItemPosition + 1 >=  $lightBoxItems.length) {
+      
+       const lastItem = `.item-${currentItemPosition}`
+ 
+       currentItemPosition = 0
+       const currentItem = `.item-${currentItemPosition}`
+      
+       setNodeAttributes(lastItem, currentItem)
+   } else {
+       currentItemPosition += 1
+       const lastItem = `.item-${currentItemPosition - 1}`
+       const currentItem = `.item-${currentItemPosition}`
+      
+       setNodeAttributes(lastItem, currentItem)
+   }
+}
+ 
+const goToPreviousSlide = () => {
+   if (currentItemPosition - 1 >=  0) {
+       currentItemPosition -= 1
+       const currentItem = `.item-${currentItemPosition}`
+       const lastItem = `.item-${currentItemPosition + 1}`
+ 
+       setNodeAttributes(lastItem, currentItem)
+   } else {
+       const lastItem = `.item-${currentItemPosition}`
+      
+       currentItemPosition = 2
+       const currentItem = `.item-${currentItemPosition}`
+      
+       setNodeAttributes(lastItem, currentItem)
+   }
+}
+ 
+const setNodeAttributes = (lastItem, currentItem) => {
+   $(lastItem).css('display', 'none')
+   $(currentItem).css('display', 'block')
+   $(lastItem).attr('aria-hidden', 'true')
+   $(currentItem).attr('aria-hidden', 'false')
+}
+ 
+// Events
+$prevBtn.click(function() {
+   goToPreviousSlide()
+})
+ 
+$nextBtn.click(function() {
+   goToNextSlide()
+})
+ 
 $(document).keydown(function(e) {
-  const keyCode = e.keyCode ? e.keyCode : e.which
-  //go to next slide when pressing right arrow 
-  if (keyCode === 39) {
-      goToNextSlide()
-  //go to previous slide when pressing left arrow     
-  } else if (keyCode === 37) {
-      goToPreviousSlide()
-  //close lightbox when pressing escape    
-  } else if (keyCode === 27) {
-      closeLightBox()
-  }
-
+   const keyCode = e.keyCode ? e.keyCode : e.which
+ 
+   if (keyCode === 39) {
+       goToNextSlide()
+   } else if (keyCode === 37) {
+       goToPreviousSlide()
+   }
 })
 
+// Close Lightbox when espace key is pressed
+$(document).on('keydown', e => {
+  const keyCode = e.keyCode ? e.keyCode : e.which
 
-//keyboardevent.key - accessibility -- fill-in form
+  if ($modal.attr('aria-hidden') == 'false' && keyCode === 27) {
+      onCloseModal()
+  }
+})
+
+//Fill-in form - accessibility 
 
 // Global DOM var
 const $body = $('#body')
@@ -363,4 +434,4 @@ $(document).on('keydown', e => {
    if ($modal.attr('aria-hidden') == 'false' && keyCode === 27) {
        onCloseModal()
    }
-})
+})*/
