@@ -51,7 +51,7 @@ photographers.forEach(function(photographer) {
   photographerDiv.classList.add("photographe");
 
 
-  photographerDiv.innerHTML = `<a href="photographer.html?id=${photographer.id}"><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}"><h2 class="name">${photographer.name}</h2></a><div class="details"><p class="location">${photographer.city}, ${photographer.country}</p><p>${photographer.tagline}</p><p class="price">${photographer.price}€/jour</p><a class="hashtags">#${photographer.tags}</a></div>`;
+  photographerDiv.innerHTML = `<a href="photographer.html?id=${photographer.id}"><img src="./Sample Photos/Photographers ID Photos/${photographer.portrait}" alt="${photographer.name}"><h2 class="name">${photographer.name}</h2></a><div class="details"><p class="location">${photographer.city}, ${photographer.country}</p><p>${photographer.tagline}</p><p class="price">${photographer.price}€/jour</p><a class="hashtags">#${photographer.tags}</a></div>`;
   gallery.appendChild(photographerDiv);
   }) 
 }

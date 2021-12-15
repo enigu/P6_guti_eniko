@@ -86,11 +86,11 @@ fetch("photographers.json")
     
         //vérifier que medium["image"] existe, si oui on fait avec medium["image"] sinon avec medium["video"]
         if (medium["image"]) {
-          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="controls" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         } 
       } 
@@ -118,14 +118,20 @@ fetch("photographers.json")
         mediaDiv.classList.add("mediadiv");
 
         if (medium["image"]) {    
-          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"/>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"/>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
       })
+
+      // open Lightbox if img clicked
+      let mediaDiv = document.querySelectorAll(".mediadiv"); 
+      mediaDiv.addEventListener('click', e => {
+        openLightBox ();
+      });  
     }); 
      
 
@@ -141,26 +147,32 @@ fetch("photographers.json")
     const lightBox = document.getElementById("lightbox");
     //sélectionner img et video à la fois avec .class
     const images = photos.querySelectorAll(".images"); 
-    const titleImg = photos.querySelector(".title >p");
+    const titleImg = photos.querySelector(".titleparagraph");
+    const lightBoxContainer = document.querySelector(".lightbox-container");
+
+    //fonction openLightBox
+    //function openLightBox () {
 
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', e => {          
           lightBox.classList.add("active");
+          
           let img; 
           // condition selon balise img ou vidéo
           if (e.target.src.includes('.jpg')){
             img = document.createElement("img");
-            //title p innerhtml = e.target.alt
-            //img.title = medium.title;
+            img.alt = e.target.alt
+            titleImg.innerHTML = img.alt
           }
-          else {
+          else if (e.target.src.includes('.mp4')){
             img = document.createElement("video");
             img.setAttribute("controls", "");
-            //title p innerhtml = e.target.alt
+            img.alt = e.target.title
+            titleImg.innerHTML = img.alt
           }
           
             img.classList.add("lightboxImg");
-            img.src = images[i].src;  
+            img.src = images[i].src;
         
             const nextButton = document.createElement("button");
             nextButton.classList.add("next");
@@ -171,9 +183,9 @@ fetch("photographers.json")
             }
 
             lightBox.innerHTML = '<span class="closed"><i class="fas fa-times"></i></span> <button class="previous"><i class="fas fa-chevron-left"><p></p></i></button>';
-            lightBox.appendChild(img);
-            lightBox.appendChild(titleImg);
+            lightBox.appendChild(img);           
             lightBox.appendChild(nextButton);
+            lightBox.appendChild(titleImg); 
 
             let nxtButton = lightBox.querySelector(".next");
             let prvButton = lightBox.querySelector(".previous");
@@ -188,11 +200,13 @@ fetch("photographers.json")
               if (images[i].src.includes('.mp4')) {
                 let video = document.createElement('VIDEO')
                 video.src = images[i].src; 
-                video.onloadeddata = () => {
+
+                video.onloadeddata = (e) => {
                   lightboxImg.remove();
                   lightBox.appendChild(video);
                   video.classList.add("lightboxImg");
-                  //title p innerhtml = images[i].alt
+                  titleImg.innerHTML = img.alt
+                  
                 }
                 video.setAttribute('controls','');
               }
@@ -200,25 +214,14 @@ fetch("photographers.json")
               if (images[i].src.includes('.jpg')) {
                 img = document.createElement("img");
                 img.src = images[i].src;
+                
                 img.onload = () => {
-                lightboxImg.remove();
-                //title p innerhtml = e.target.alt
-
+                  lightboxImg.remove();
                   lightBox.appendChild(img);
                   img.classList.add("lightboxImg");
+                  //titleImg.innerHTML = lightboxImg.alt 
                 }
               } 
-              //if images[i].src contient .jpg && img.src ne contient pas .jpg
-              //on utilise replaceChild pour remplacer video par img
-              //else if images[i].src ne contient pas .jpg && img.src contient.jpg
-              //on utilise replaceChild pour remplacer img par video
-              /*if (images[i].src.includes('.jpg') && !img.src.includes('.jpg')){
-                lightBox.replaceChild('img','<video>');
-              }
-              else if (!images[i].src.includes('.jpg') && img.src.includes('.jpg')){
-                lightBox.replaceChild('<video>','img');
-              }*/
-              //img.src = images[i].src;
             })
 
             prvButton.addEventListener('click', e => {
@@ -256,7 +259,7 @@ fetch("photographers.json")
             })  
         })
       }
-    
+    //}
 
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
@@ -312,7 +315,7 @@ closeButton.addEventListener('click', function() {
 
 
 //Lightbox - accessibility 
-/*
+
 const $prevBtn = $(".previous")
 const $nextBtn = $('.next')
 const $lightBoxItems = $('.lightboxImg')
@@ -434,4 +437,4 @@ $(document).on('keydown', e => {
    if ($modal.attr('aria-hidden') == 'false' && keyCode === 27) {
        onCloseModal()
    }
-})*/
+})

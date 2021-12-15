@@ -1,5 +1,6 @@
 .header svg {
     width: 9.5em;
+    margin-left: 2em;
 }
 
 #info {
@@ -9,6 +10,7 @@
     align-items: center;
     background: #fafafa;
     width: 95%;
+    height: 30vh;
     margin:auto;
     padding-top: 0.8em;
     padding-bottom: 0.8em;
@@ -48,6 +50,11 @@
     font-size: 1em;
     font-weight: bolder;
     width: 4em;
+}
+
+.hashtags {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .avatar img {
@@ -276,85 +283,40 @@ i.fas.fa-times {
 .nrheart {
     display: flex;
 }
+   
 
 #lightbox {
-    position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255,255,255, 0.9);
-    z-index: 10;
     overflow: auto;
     display: none;
+    position: fixed;
+    background: rgba(255,255,255, 0.9);
+    z-index: 10;
 }
 
 #lightbox.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    text-align:center;
   }
 
 #lightbox img {
-    width: 20em;
-    height: 20em;
+    width: 24em;
+    height: 24em;
     padding: 4px;
     margin-top: 10%;
     margin-left: 10%;
+    object-fit: cover;
 }
 
 #lightbox video {
-    width: 20em;
-    height: 20em;
-    padding: 4px;
-}
-
-.lightbox__next, .lightbox__prev {
-    border: none;
-    width: 3em;
-    height: 3em;
-    background: transparent;
-    color:#901C1C;
-    position: fixed; 
-    top: 50%;
-    right: 10%;
-    margin-top: -14px;
-    cursor: pointer;
-    opacity: 1;
-    z-index: 11;
-}
-
-.lightbox__prev {
-    right: auto;
-    left: 30%;
-}
-
-.lightbox__close {
-    border: none;
-    width: 3em;
-    height: 3em;
-    background: transparent;
-    color:#901C1C;
-    position:fixed;
-    top: 10.5em;
-    right: 15em;
-    opacity: 1;
-    cursor: pointer;
-    z-index: 11;
-}
-.lightbox__container {
-    margin-left: 50px;
-    margin-right: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-.lightbox__container img {
-    width: 20em;
-    height: 20em;
+    width: 24em;
+    height: 24em;
     padding: 4px;
     margin-top: 10%;
     margin-left: 10%;
+    object-fit: cover;
 }
 
 .previous, .next {
@@ -364,8 +326,8 @@ i.fas.fa-times {
     background: transparent;
     color:#901C1C;
     position: fixed; 
-    top: 50%;
-    right: 10%;
+    top: 40%;
+    right: 12%;
     margin-top: -14px;
     cursor: pointer;
     opacity: 1;
@@ -373,7 +335,7 @@ i.fas.fa-times {
 
 .previous {
     right: auto;
-    left: 30%;
+    left: 25%;
 }
 
 .previous:hover, .next:hover {
@@ -387,8 +349,8 @@ i.fas.fa-times {
     background: transparent;
     color:#901C1C;
     position:fixed;
-    top: 10.5em;
-    right: 15em;
+    top: 3em;
+    right: 14em;
     opacity: 1;
     cursor: pointer;
     z-index: 10;
@@ -401,3 +363,78 @@ i.fas.fa-times {
 i.fas.fa-chevron-right {
     font-weight: 900;
 }
+
+.titleparagraph {
+    color: #901C1C;
+}
+
+#total-likes {
+    position: fixed;
+    right: 2%;
+    bottom: 0;
+}
+
+
+@media all and (max-width: 480px){
+
+    #info {
+        width: auto;
+        height: 30vh;
+        background-color: #fff;
+    }
+
+    .photographers-profile {
+        width: auto;
+    }
+
+    .photographe {
+        width: 20em;
+    }
+
+    #contactme {
+        position: fixed;
+        left: 30%;
+        bottom: 4em;
+    }
+
+    #lightbox.active {
+        width: 26em;
+    }
+
+    #lightbox img {
+        width: 18em;
+        height: 18em;
+        padding: 4px;
+        margin-top: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: cover;
+        border-radius: 2%;
+    }
+
+    #lightbox video {
+        width: 18em;
+        height: 18em;
+        padding: 4px;
+        margin-top: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: cover;
+        border-radius: 2%;
+    }
+
+    .closed {
+        top: 10em;
+        right: 2em;
+    }
+
+
+    .previous {
+        right: auto;
+        left: 8%;
+    }
+    .next, .previous {
+        top: 50%;
+        right: 4%;
+    }
+}    
