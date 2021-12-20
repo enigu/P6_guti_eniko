@@ -33,9 +33,10 @@
             <div class="filter">
                 <label for="tri">Trier par</label>
                 <div class="filterup">
-                        <button role="choice" id="popularity" class="choice" id="option" aria-haspopup="listbox" aria-labelledby="exp_button" aria-selected="true">Popularité
-                        <span><i class="fas fa-chevron-down"></i></span>
-                        </button>
+                        <div class="first-row">
+                            <input role="choice" value="Popularité" id="popularity" class="choice" id="option" aria-haspopup="listbox" aria-labelledby="exp_button" aria-selected="true">
+                            <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                        </div>
                     <ul class="dropdown" role="list" aria-labelledby="filter-choice">    
                         <li role="choice" id="date" class="choice" id="date" aria-selected="false">Date</li>
                         <li role="choice" id="title" class="choice" id="title" aria-selected="false">Titre</li>
@@ -49,11 +50,8 @@
         </section>
         <div id="total-likes">
         </div>
-        <div class="lightbox-container">
             <div id="lightbox" aria-label="close-up image">
-
-            </div> 
-        </div>
+            </div>
         <section class="background" role="region" aria-label="fill-in form">
             <div class="content">
                 <div class="form">

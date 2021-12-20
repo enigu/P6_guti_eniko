@@ -93,26 +93,12 @@ fetch("photographers.json")
           mediaDiv.innerHTML = '<a>' + '<video class="images" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         } 
-      } 
+      }
     })
     
-    // trier media selon popularité, date, titre
-    popularity.addEventListener('click', e => {
-      popularity.innerHTML = '<a>' + 'Popularité' +'</a>' + ' ' + '<span>' + '<i class="fas fa-chevron-up">' + '</i>' + '</span>'
-      
-      // fermer la dropdown avec l'icone chevron-up
-      const chevronUp = document.querySelector(".fa-chevron-up")  
-      chevronUp.addEventListener('click', e => {
-        dropdown.style.display = "none";
-        popularity.innerHTML = '<a>' + 'Popularité' +'</a>' + ' '+ '<span>' + '<i class="fas fa-chevron-down">' + '</i>' + '</span>'
-      })
-      // tri décroissant sur le nobre de likes  
-      mediaArray.sort(function (a,b) {
-        return b.likes - a.likes; 
-      });
-      
-      photos.innerHTML = "";
-      //show filtered media by popularity
+    // media filter on click 
+    // function show media 
+    function showMedia() {
       mediaArray.forEach(function(medium) {
         let mediaDiv = document.createElement("div");
         mediaDiv.classList.add("mediadiv");
@@ -122,26 +108,72 @@ fetch("photographers.json")
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title=' + medium["title"] + '>' + '</video>' + '</a>' + '<div class="title">' + '<p>' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
       })
-
-      // open Lightbox if img clicked
-      let mediaDiv = document.querySelectorAll(".mediadiv"); 
-      mediaDiv.addEventListener('click', e => {
-        openLightBox ();
-      });  
+    }
+    //select media according to popularity
+    popularity.addEventListener('click', e => {
+      
+      // decreasing filter on likes  
+      mediaArray.sort(function (a,b) {
+        return b.likes - a.likes; 
+      });
+      
+      photos.innerHTML = "";
+      //show filtered media by popularity
+      showMedia();
     }); 
-     
 
-      //event listener on spans up and down - dropdown on and off 
+    //select media according to date
+    date.addEventListener('click', e => {
+      // filter from most to less recent 
+      mediaArray.sort(function (a,b) {
+        return new Date(b.date) - new Date(a.date); 
+      });
+    
+      photos.innerHTML = "";
+      //show filtered media according to date 
+      showMedia();
+    });
+
+    //select media according to title
+    title.addEventListener('click', e => {
+      // filter according to title from most A to W
+      mediaArray.sort(function (a,b) {
+                var titleA = a.title.toLowerCase();
+                var titleB = b.title.toLowerCase();
+                if (titleA < titleB) //sort string ascending
+                    return -1
+      });
+    
+      photos.innerHTML = "";
+      //show filtered media according to title (A-W)
+      showMedia();
+    });
+
+
+      //open dropdown with arrow down
       const chevronDown = document.querySelector(".fa-chevron-down")
       const dropdown = document.querySelector(".dropdown")
+      const arrow = document.querySelector(".arrow")
     
-      chevronDown.addEventListener('click', e => {
-        dropdown.style.display = "flex";
+      chevronDown.addEventListener('click',function(ev) {
+        if (!dropdown.classList.contains("active")) {
+          arrow.style.transform = 'rotate(180deg)';
+          dropdown.style.display = "flex";
+          dropdown.classList.add("active");
+        }
+
+        else if (dropdown.classList.contains("active")) {
+          arrow.style.transform = 'rotate(360deg)';
+          dropdown.style.display = "none";
+          dropdown.classList.remove("active");
+        }
       })
+
+  
 
     //lightbox
     const lightBox = document.getElementById("lightbox");
@@ -161,7 +193,7 @@ fetch("photographers.json")
           // condition selon balise img ou vidéo
           if (e.target.src.includes('.jpg')){
             img = document.createElement("img");
-            img.alt = e.target.alt
+            img.setAttribute("alt", e.target.alt);
             titleImg.innerHTML = img.alt
           }
           else if (e.target.src.includes('.mp4')){
@@ -170,7 +202,6 @@ fetch("photographers.json")
             img.alt = e.target.title
             titleImg.innerHTML = img.alt
           }
-          
             img.classList.add("lightboxImg");
             img.src = images[i].src;
         
@@ -192,6 +223,10 @@ fetch("photographers.json")
 
             nxtButton.addEventListener('click', e => {
               i += 1;
+              if (i >= images.length)
+              {
+                i = 0;
+              }
               img.src = images[i].src;
               
               let lightboxImg = document.querySelector(".lightboxImg");
@@ -205,7 +240,7 @@ fetch("photographers.json")
                   lightboxImg.remove();
                   lightBox.appendChild(video);
                   video.classList.add("lightboxImg");
-                  titleImg.innerHTML = img.alt
+                  titleImg.innerHTML = images[i].title
                   
                 }
                 video.setAttribute('controls','');
@@ -214,12 +249,12 @@ fetch("photographers.json")
               if (images[i].src.includes('.jpg')) {
                 img = document.createElement("img");
                 img.src = images[i].src;
-                
+                titleImg.innerHTML = images[i].alt
+
                 img.onload = () => {
                   lightboxImg.remove();
                   lightBox.appendChild(img);
                   img.classList.add("lightboxImg");
-                  //titleImg.innerHTML = lightboxImg.alt 
                 }
               } 
             })
@@ -228,22 +263,31 @@ fetch("photographers.json")
               let lightboxImg = document.querySelector(".lightboxImg");
 
               i -= 1;
+              if (i < 0) {
+                i = images.length - 1;
+              }
               img.src = images[i].src;
+
               //video
               if (images[i].src.includes('.mp4')) {
                 let video = document.createElement('VIDEO')
                 video.src = images[i].src; 
+
                 video.onloadeddata = () => {
                   lightboxImg.remove();
                   lightBox.appendChild(video);
                   video.classList.add("lightboxImg");
+                  titleImg.innerHTML = images[i].title
                 }
                 video.setAttribute('controls','');
               }
+
               //img
               if (images[i].src.includes('.jpg')) {
                 img = document.createElement("img");
                 img.src = images[i].src;
+                titleImg.innerHTML = images[i].alt
+
                 img.onload = () => {
                   lightboxImg.remove();
                   lightBox.appendChild(img);
@@ -259,7 +303,7 @@ fetch("photographers.json")
             })  
         })
       }
-    //}
+    //}  
 
     //total likes and price
     let totalLikes = document.getElementById("total-likes");
@@ -333,7 +377,8 @@ const goToNextSlide = () => {
        const currentItem = `.item-${currentItemPosition}`
       
        setNodeAttributes(lastItem, currentItem)
-   } else {
+   } 
+   else {
        currentItemPosition += 1
        const lastItem = `.item-${currentItemPosition - 1}`
        const currentItem = `.item-${currentItemPosition}`
@@ -349,7 +394,8 @@ const goToPreviousSlide = () => {
        const lastItem = `.item-${currentItemPosition + 1}`
  
        setNodeAttributes(lastItem, currentItem)
-   } else {
+   } 
+   else {
        const lastItem = `.item-${currentItemPosition}`
       
        currentItemPosition = 2
