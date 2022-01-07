@@ -86,11 +86,11 @@ fetch("photographers.json")
     
         // condition medium["image"] or medium["video"] according to media
         if (medium["image"]) {
-          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img class="images" tabindex="0" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" tabindex="0" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         } 
       }
@@ -104,26 +104,38 @@ fetch("photographers.json")
         mediaDiv.classList.add("mediadiv");
 
         if (medium["image"]) {    
-          mediaDiv.innerHTML = '<a>' + '<img class="images" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<img class="images" tabindex="0" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["image"] + '"alt=' + medium["title"] + '>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title=' + medium["title"] + '>' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" tabindex="0" controls="" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title=' + medium["title"] + '>' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         }
       })
 
       const images = photos.querySelectorAll(".images");
 
+    //launch show LightBox function when filtering with media filters  
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', e => {
           lightBoxFunc(e, images, i);
         });
       }
     }
+
     //select media according to popularity
     popularity.addEventListener('click', e => {
-      
+      popularitySort();
+    });
+
+    //accessibility: sort according to popularity when pressing enter key 
+    popularity.addEventListener('keypress', e => {
+      if (e.key === 'Enter')
+      popularitySort();
+    })
+
+    //sorting out media according to popularity
+    function popularitySort() {
       // decreasing filter on likes  
       mediaArray.sort(function (a,b) {
         return b.likes - a.likes; 
@@ -132,24 +144,43 @@ fetch("photographers.json")
       photos.innerHTML = "";
       //show filtered media by popularity
       showMedia();
-    }); 
+    } 
 
     //select media according to date
     date.addEventListener('click', e => {
+      dateSort();
+    });
+
+    //accessibility: sort according to date when pressing enter key 
+    date.addEventListener('keypress', e => {
+      if (e.key === 'Enter')
+      dateSort();
+    })
       // filter from most to less recent 
+    function dateSort() {
       mediaArray.sort(function (a,b) {
         return new Date(b.date) - new Date(a.date); 
-      });
+      })
     
       photos.innerHTML = "";
       //show filtered media according to date 
       showMedia();
 
+    };
+
+    //select media according to title (A -> W)
+    title.addEventListener('click', e => {
+      titleSort();
     });
 
-    //select media according to title
-    title.addEventListener('click', e => {
+    ////accessibility: sort according to title's alphabetical order when pressing enter key 
+    title.addEventListener('keypress', e => {
+      if (e.key === 'Enter')
+      titleSort();
+    })
+
       // filter according to title from most A to W
+    function titleSort() {  
       mediaArray.sort(function (a,b) {
                 var titleA = a.title.toLowerCase();
                 var titleB = b.title.toLowerCase();
@@ -160,7 +191,7 @@ fetch("photographers.json")
       photos.innerHTML = "";
       //show filtered media according to title (A-W)
       showMedia();
-    });
+    }
 
       //open dropdown with arrow down
       const chevronDown = document.querySelector(".fa-chevron-down")
@@ -168,6 +199,17 @@ fetch("photographers.json")
       const arrow = document.querySelector(".arrow")
     
       chevronDown.addEventListener('click',function(ev) {
+        openDropDown();
+      });
+
+      //accessibility: launching Dropdown filter when pressing enter on the arrow 
+      chevronDown.addEventListener('keypress', e => {
+        if (e.key === 'Enter')
+          openDropDown();
+      });
+
+      //open dropdown with mediafilters(date & title) 
+      function openDropDown() {
         if (!dropdown.classList.contains("active")) {
           arrow.style.transform = 'rotate(180deg)';
           dropdown.style.display = "flex";
@@ -179,7 +221,8 @@ fetch("photographers.json")
           dropdown.style.display = "none";
           dropdown.classList.remove("active");
         }
-      })
+      }
+
 
     //lightbox funtion to open images & videos
       const images = photos.querySelectorAll(".images");
@@ -188,6 +231,13 @@ fetch("photographers.json")
         images[i].addEventListener('click', e => {
           lightBoxFunc(e, images, i);
         });
+
+        //accessibility: open lightbox when pressing enter on an image
+        images[i].addEventListener("keypress", e => {
+          if (e.key === 'Enter') {
+            lightBoxFunc(e, images, i);
+          }
+        })
       }
 
       function lightBoxFunc(e, images, i) {
@@ -232,6 +282,11 @@ fetch("photographers.json")
           let prvButton = lightBox.querySelector(".previous");
 
           nxtButton.addEventListener('click', e => {
+            goNextSlide()
+          });
+
+          //function go to next slide when clicking on right arrow
+          function goNextSlide() {
             i += 1;
             if (i >= images.length)
             {
@@ -267,9 +322,14 @@ fetch("photographers.json")
                 img.classList.add("lightboxImg");
               }
             } 
-          })
+          }
 
           prvButton.addEventListener('click', e => {
+            goPreviousSlide();
+          })
+
+          ////function go to previous slide when clicking on left arrow
+          function goPreviousSlide() {
             let lightboxImg = document.querySelector(".lightboxImg");
 
             i -= 1;
@@ -304,13 +364,24 @@ fetch("photographers.json")
                 img.classList.add("lightboxImg");
               }
             } 
-          })
+          }
 
           //close lightbox with x button
           const closedButton = document.querySelector(".closed");
           closedButton.addEventListener('click', e => {
             lightBox.classList.remove("active");
-          })  
+          })
+
+          //accessibility: close lightbox with escape key, moving forward and backward with image list according to right & left arrow
+          window.addEventListener("keydown", e => {
+            if (e.key === 'Escape')
+              lightBox.classList.remove("active");
+            else if (e.key === 'ArrowRight')
+              goNextSlide();
+            else if (e.key === 'ArrowLeft')
+              goPreviousSlide();
+          })
+
       }
     //}  
 
@@ -360,136 +431,20 @@ closeFormBtn.addEventListener('click', function() {
     formBackground.style.display = "none";
 });
 
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape')
+    formBackground.style.display = "none";
+})
+
 // close form - close with button 'Envoyer'
 const closeButton = document.querySelector(".submit");
-closeButton.addEventListener('click', function() {
-    formBackground.style.display = "none";  
+closeButton.addEventListener('click', function(e) {
+  e.preventDefault();
+  console.log(document.querySelector("#first-name").value);
+  console.log(document.querySelector("#name").value);
+  console.log(document.querySelector("#email").value);
+  console.log(document.querySelector("#message").value);
+  formBackground.style.display = "none";
 });
 
 
-//Lightbox - accessibility 
-
-const $prevBtn = $(".previous")
-const $nextBtn = $('.next')
-const $lightBoxItems = $('.lightboxImg')
-const $lightBox = $('#lightbox')
- 
-let currentItemPosition = 0
- 
-// Functions got to next & previous slides
-const goToNextSlide = () => {
-   if (currentItemPosition + 1 >=  $lightBoxItems.length) {
-      
-       const lastItem = `.item-${currentItemPosition}`
- 
-       currentItemPosition = 0
-       const currentItem = `.item-${currentItemPosition}`
-      
-       setNodeAttributes(lastItem, currentItem)
-   } 
-   else {
-       currentItemPosition += 1
-       const lastItem = `.item-${currentItemPosition - 1}`
-       const currentItem = `.item-${currentItemPosition}`
-      
-       setNodeAttributes(lastItem, currentItem)
-   }
-}
- 
-const goToPreviousSlide = () => {
-   if (currentItemPosition - 1 >=  0) {
-       currentItemPosition -= 1
-       const currentItem = `.item-${currentItemPosition}`
-       const lastItem = `.item-${currentItemPosition + 1}`
- 
-       setNodeAttributes(lastItem, currentItem)
-   } 
-   else {
-       const lastItem = `.item-${currentItemPosition}`
-      
-       currentItemPosition = 2
-       const currentItem = `.item-${currentItemPosition}`
-      
-       setNodeAttributes(lastItem, currentItem)
-   }
-}
- 
-const setNodeAttributes = (lastItem, currentItem) => {
-   $(lastItem).css('display', 'none')
-   $(currentItem).css('display', 'block')
-   $(lastItem).attr('aria-hidden', 'true')
-   $(currentItem).attr('aria-hidden', 'false')
-}
- 
-// Events
-$prevBtn.click(function() {
-   goToPreviousSlide()
-})
- 
-$nextBtn.click(function() {
-   goToNextSlide()
-})
- 
-$(document).keydown(function(e) {
-   const keyCode = e.keyCode ? e.keyCode : e.which
- 
-   if (keyCode === 39) {
-       goToNextSlide()
-   } else if (keyCode === 37) {
-       goToPreviousSlide()
-   }
-})
-
-// Close Lightbox when espace key is pressed
-$(document).on('keydown', e => {
-  const keyCode = e.keyCode ? e.keyCode : e.which
-
-  if ($modal.attr('aria-hidden') == 'false' && keyCode === 27) {
-      onCloseModal()
-  }
-})
-
-//Fill-in form - accessibility 
-
-// Global DOM var
-const $body = $('#body')
-const $openModalBtn = $('#contactme')
-const $mainWrapper = $('.main')
-const $modal = $('.form')
-const $modalTitle = $('#contact-message')
-const $modalCloseBtn = $('.submit')
- 
-// Functions open & close fill-in forms
-const onOpenModal = () => {
-   $mainWrapper.attr('aria-hidden', 'true')
-   $modal.attr('aria-hidden', 'false')
-   $body.addClass('no-scroll')
-   $modal.css('display', 'flex')
-   $modalCloseBtn.focus()
-}
- 
-const onCloseModal = () => {
-   $mainWrapper.attr('aria-hidden', 'false')
-   $modal.attr('aria-hidden', 'true')
-   $body.removeClass('no-scroll')
-   $modal.css('display', 'none')
-   $openModalBtn.focus()
-}
- 
-// Event
-$openModalBtn.click(function() {
-   onOpenModal()
-})
- 
-$modalCloseBtn.click(function() {
-   onCloseModal()
-})
- 
-// Close modal when espace key is pressed
-$(document).on('keydown', e => {
-   const keyCode = e.keyCode ? e.keyCode : e.which
- 
-   if ($modal.attr('aria-hidden') == 'false' && keyCode === 27) {
-       onCloseModal()
-   }
-})

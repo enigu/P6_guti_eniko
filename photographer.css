@@ -103,6 +103,8 @@
     align-items: baseline;
     width: 30%;
     margin-left: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .filterup {
@@ -173,17 +175,19 @@
     padding-left: 6px;
     padding-right: 6px;
     font-family: inherit;
-    text-align: left;   
+    text-align: left;
 }
 
 .choice {
     text-align: left;
-    height: 6vh;
+    height: 5vh;
     padding-left: 4px;
     width: 8em;
+    padding-top: 14px;
 }
 
 #date {
+    border-top: 2px solid;
     border-bottom: 2px solid;
 }
 
