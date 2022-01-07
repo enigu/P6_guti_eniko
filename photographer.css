@@ -364,7 +364,7 @@ i.fas.fa-times {
     background: transparent;
     color:#901C1C;
     position: fixed; 
-    top: 50%;
+    top: 40%;
     right: 16%;
     margin-top: -14px;
     cursor: pointer;
@@ -373,6 +373,7 @@ i.fas.fa-times {
 
 .previous {
     right: auto;
+    left: 28%;
 }
 
 .previous:hover, .next:hover {
@@ -387,7 +388,7 @@ i.fas.fa-times {
     color:#901C1C;
     position:fixed;
     top: 3em;
-    right: 14em;
+    right: 11em;
     opacity: 1;
     cursor: pointer;
     z-index: 10;
@@ -486,4 +487,48 @@ i.fas.fa-chevron-right {
     .likesdiv {
         display: none;
     }
-}    
+}   
+
+@media all and (max-width: 375px){
+
+    #lightbox.active {
+        width: 22em;
+    }
+
+    #lightbox img {
+        width: 16em;
+        height: 16em;
+        padding: 4px;
+        margin-top: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: cover;
+        border-radius: 2%;
+    }
+
+    #lightbox video {
+        width: 16em;
+        height: 16em;
+        padding: 4px;
+        margin-top: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        object-fit: cover;
+        border-radius: 2%;
+    }
+
+    .closed {
+        top: 9em;
+        right: 2em;
+    }
+
+    .previous {
+        right: auto;
+        left: 6%;
+    }
+    .next, .previous {
+        top: 50%;
+        right: 4%;
+    }
+
+}
