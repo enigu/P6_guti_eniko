@@ -107,6 +107,10 @@
     margin-bottom: 0.5em;
 }
 
+.filter label {
+    font-size: 1.2em;
+}
+
 .filterup {
     display: flex;
     flex-direction: column;
