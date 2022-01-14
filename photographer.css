@@ -1,6 +1,15 @@
+body {
+    margin-left: 1em;
+    margin-right: 1em;
+}
 .header svg {
     width: 9.5em;
+    margin-left: 4em;
+}
+
+.photographers-profile {
     margin-left: 2em;
+    margin-right: 2em;
 }
 
 #info {
@@ -59,8 +68,8 @@
 }
 
 .avatar img {
-    width: 8em;
-    height: 8em;
+    width: 9em;
+    height: 9em;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 2em;
@@ -95,6 +104,10 @@
     background-color: rgba(255,255,255, 0.7);
 }
 
+.select-menu {
+    margin-left: 2em;
+    margin-top: 2em;
+}
 
 .filter {
     display: flex;
@@ -202,9 +215,14 @@
     align-items: center;
 }
 
+.mediadiv {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
 .mediadiv img {
-    width: 16em;
-    height: 16em;
+    width: 18em;
+    height: 18em;
     object-fit: cover;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 0.4em;
@@ -414,20 +432,37 @@ i.fas.fa-chevron-right {
 
 
 @media all and (max-width: 480px){
+    .header svg {
+        width: 9em;
+        margin-left: 2em;
+        margin-top: 2em;
+    }
 
     #info {
         width: auto;
-        height: 30vh;
+        height: 20vh;
         background-color: #fff;
     }
 
     .photographers-profile {
         width: auto;
+        margin-left: 2em;
+        margin-right: 2em;
+    }
+
+    .left-info {
+        margin-left: 0.5em;
     }
 
     .photographe {
-        width: 20em;
+        width: auto;
     }
+
+    .avatar img {
+        width: 7em;
+        height: 7em;
+        margin-right: 0.5em;
+    }    
 
     #contactme {
         position: fixed;
@@ -490,6 +525,24 @@ i.fas.fa-chevron-right {
 }   
 
 @media all and (max-width: 375px){
+
+    .header svg {
+        margin-left: 0.5em;
+    }
+
+    .photographers-profile {
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    .left-info h1 {
+        font-size: 1.5em;
+    }
+
+    .avatar img {
+        width: 6em;
+        height: 6em;
+        margin-right: 0px;
+    }
 
     #lightbox.active {
         width: 22em;
