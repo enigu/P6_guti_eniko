@@ -31,15 +31,17 @@ fetch("photographers.json")
           let gallery = document.getElementById("gallery");
           photographerDiv.classList.add("photographe");
         }
-    })  
+      })  
     })
   }
-
+  
   generatePhotographers(photographers);
+  
   //addTags();
 })
 
 function parsePhotographers(photographers, tag) {
+  
 let photographerDiv = document.createElement("div");
 let gallery = document.getElementById("gallery");
 
@@ -55,6 +57,7 @@ photographers.forEach(function(photographer) {
   gallery.appendChild(photographerDiv);
   }) 
 }
+
 
 function generatePhotographers(photographers) {
 

@@ -90,7 +90,7 @@ fetch("photographers.json")
           photos.appendChild(mediaDiv);
         }
         else if (medium["video"]) {
-          mediaDiv.innerHTML = '<a>' + '<video class="images" tabindex="0" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart" tabindex="0">' + '</i>' + '</div>'+ '</div>';
+          mediaDiv.innerHTML = '<a>' + '<video class="images" tabindex="0" preload="auto" src="./Sample Photos/' + currentPhotographer["name"] + '/' + medium["video"] + '"title="' + medium["title"] +'">' + '</video>' + '</a>' + '<div class="title">' + '<p class="titleparagraph">' + medium["title"] + '</p>' + '<div class="likes-counter">' + '<p class="counter">' +  medium["likes"] + '</p>' + '<i class="fas fa-heart heart" tabindex="0">' + '</i>' + '</div>'+ '</div>';
           photos.appendChild(mediaDiv);
         } 
       }
@@ -272,7 +272,7 @@ fetch("photographers.json")
           titleImg.classList.add("titleparagraph");
           titleImg.innerHTML = '<p>' + img.alt + '</p>';
         }
-        
+
         else if (e.target.src.includes('.mp4')){
           img = document.createElement("video");
           img.setAttribute("controls", "");
