@@ -12,6 +12,7 @@
     align-content: center;
     justify-content: flex-start;
     align-items: center;
+    width: 95%;
 }
 
 .tag-container .tag {
@@ -174,6 +175,7 @@
     }
     .tag-container {
         margin-left: 1em;
+        width: 80%;
     }
 
     .content h1 {

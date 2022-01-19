@@ -38,6 +38,15 @@ fetch("photographers.json")
   generatePhotographers(photographers);
   
   //addTags();
+
+  //adding a new json file with media.alt to the images
+  const media = jsonObj["media"];
+    
+  for (let i = 0; i < media.length; i++) {
+    media[i]["alt-text"] = media[i].title;
+    //media[i].alt = media[i].title;
+    console.log(media[i]["alt-text"])
+  }
 })
 
 function parsePhotographers(photographers, tag) {
