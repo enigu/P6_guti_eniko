@@ -47,6 +47,11 @@ fetch("photographers.json")
     //media[i].alt = media[i].title;
     console.log(media[i]["alt-text"])
   }
+
+  var json = JSON.stringify(media);
+
+  var fs = require(['fs']);
+  fs.writeFile('photographers_alt.json', json);
 })
 
 function parsePhotographers(photographers, tag) {
