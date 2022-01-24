@@ -25,33 +25,19 @@ fetch("photographers.json")
       //lancer fonction qui efface les photographes qui n'ont pas le tag et affiche ceux qui l'ont
       gallery.innerHTML = "";
 
+      let tagPhotographers = [];
       photographers.forEach(function(photographer) {
         if (photographer["tags"].includes(tagName)) {
-          let photographerDiv = document.createElement("div");
-          let gallery = document.getElementById("gallery");
-          photographerDiv.classList.add("photographe");
+          tagPhotographers.push(photographer);
         }
-      })  
+      })
+      generatePhotographers(tagPhotographers); 
     })
   }
   
   generatePhotographers(photographers);
   
   //addTags();
-
-  //adding a new json file with media.alt to the images
-  const media = jsonObj["media"];
-    
-  for (let i = 0; i < media.length; i++) {
-    media[i]["alt-text"] = media[i].title;
-    //media[i].alt = media[i].title;
-    console.log(media[i]["alt-text"])
-  }
-
-  var json = JSON.stringify(media);
-
-  var fs = require(['fs']);
-  fs.writeFile('photographers_alt.json', json);
 })
 
 function parsePhotographers(photographers, tag) {
@@ -109,8 +95,6 @@ function generatePhotographers(photographers) {
     gallery.appendChild(photographerDiv);
   }) 
 }
-
-
 
 
 
